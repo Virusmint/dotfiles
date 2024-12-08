@@ -1,0 +1,11 @@
+{
+  "extras": [
+    "lazyvim.plugins.extras.editor.leap",
+    "lazyvim.plugins.extras.formatting.prettier",
+    "lazyvim.plugins.extras.ui.mini-animate"
+  ],
+  "news": {
+    "NEWS.md": "7429"
+  },
+  "version": 7
+}

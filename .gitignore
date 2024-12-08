@@ -1,0 +1,12 @@
+# Ignore everything by default.
+/*
+
+# Git stuff
+!.gitignore
+
+# Files and directories to include
+!.config
+!.vimrc
+!wallpapers
+!scripts
+!README.md

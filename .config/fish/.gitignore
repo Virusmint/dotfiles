@@ -1,0 +1,8 @@
+fish_variables
+
+functions
+
+!functions/cd.fish
+
+completions
+conf.d
