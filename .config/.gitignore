@@ -1,2 +1,14 @@
-/github-copilot
-/containers
+# Ignore everything by default
+/*
+
+# Except...
+!btop
+!fish
+!hypr
+!kitty
+!lazygit
+!neofetch
+!nvim
+!ranger
+!starship.toml
+
