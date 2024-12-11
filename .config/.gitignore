@@ -4,11 +4,14 @@
 # Except...
 !btop
 !fish
+!gtk-3.0
 !hypr
 !kitty
 !lazygit
 !neofetch
 !nvim
 !ranger
+!rofi
 !starship.toml
+
 
