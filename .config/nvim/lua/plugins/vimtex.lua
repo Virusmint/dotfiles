@@ -1,13 +1,20 @@
 return {
-    {
-        "lervag/vimtex",
-        lazy = false,
-        init = function()
-            vim.g.vimtex_view_method = "skim"
-            vim.keymap.set("n", "<localleader>", '<cmd>lua require("which-key").show("\\\\")<cr>')
-            vim.g.vimtex_mappings_disable = { ["n"] = { "K" } } -- disable `K` as it conflicts with LSP hover
-            vim.g.vimtex_view_skim_sync = 1
-            vim.g.vimtex_view_skim_activate = 1
-        end,
-    },
+  {
+    "lervag/vimtex",
+    lazy = false,
+    config = function()
+      vim.g.vimtex_view_method = "zathura"
+      vim.g.vimtex_compiler_method = "latexmk"
+      vim.g.vimtex_compiler_latexmk = {
+        options = {
+          "-verbose",
+          "-file-line-error",
+          "-auxdir=build",
+          "-synctex=1",
+          "-interaction=nonstopmode",
+          "-shell-escape",
+        },
+      }
+    end,
+  },
 }

@@ -3,6 +3,9 @@ if not status is-interactive
     return 0
 end
 
+# Disable fish greeting message
+set -U fish_greeting
+
 set -l os (uname)
 
 # Aliases
@@ -22,7 +25,5 @@ alias icat="kitten icat"
 set -x EDITOR nvim
 set -x VISUAL nvim
 
-# Disable fish greeting message
-set -U fish_greeting
 
 starship init fish | source
