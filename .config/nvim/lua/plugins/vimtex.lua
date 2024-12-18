@@ -9,8 +9,8 @@ return {
         options = {
           "-verbose",
           "-file-line-error",
-          "-auxdir=build",
-          "-synctex=1",
+          "-auxdir=build", -- bundle aux files into build folder
+          "-synctex=1", -- for forward-search
           "-interaction=nonstopmode",
           "-shell-escape",
         },

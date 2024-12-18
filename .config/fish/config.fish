@@ -25,5 +25,4 @@ alias icat="kitten icat"
 set -x EDITOR nvim
 set -x VISUAL nvim
 
-
 starship init fish | source
