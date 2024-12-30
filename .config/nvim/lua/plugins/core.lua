@@ -10,4 +10,11 @@ return {
     event = "InsertEnter",
     config = true,
   },
+  {
+    "neovim/nvim-lspconfig",
+    opts = function()
+      local keys = require("lazyvim.plugins.lsp.keymaps").get()
+      keys[#keys + 1] = { "<C-k>", mode = { "i" }, false }
+    end,
+  },
 }
