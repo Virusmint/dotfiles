@@ -30,6 +30,8 @@ return {
             accept = false, -- handled by blink.cmp at http://www.lazyvim.org/extras/coding/blink
             next = "<M-]>",
             prev = "<M-[>",
+            accept_word = "<M-w>",
+            accept_line = "<M-j>",
           },
         },
         panel = { enabled = false },
