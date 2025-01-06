@@ -77,7 +77,8 @@ style = "bold green"
 disabled = true
 
 [aws]
-format = '\[[$symbol($profile)(\($region\))(\[$duration\])]($style)\]'
+# format = '\[[$symbol($profile)(\($region\))(\[$duration\])]($style)\]'
+format = '\[[($profile)(\($region\))(\[$duration\])]($style)\]'
 style = "bold #f2881d"
 
 [bun]
