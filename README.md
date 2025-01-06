@@ -3,5 +3,5 @@
 - [ ] Snippets for latex
 - [ ] Waybar
 - [ ] Rofi
-- [ ] scripts for installation
-- [ ] ...
+- [ ] Fix lazygit colors inside neovim
+- [ ] Zathura setup on mac
