@@ -26,6 +26,7 @@ local parse = require("luasnip.util.parser").parse_snippet
 local ms = ls.multi_snippet
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
+-- Helper functions
 local matrix = function(args, snip)
   local rows = tonumber(snip.captures[2])
   local cols = tonumber(snip.captures[3])
@@ -45,7 +46,6 @@ local matrix = function(args, snip)
   nodes[#nodes] = t(" \\\\")
   return sn(nil, nodes)
 end
-
 local get_visual = function(args, parent)
   if #parent.snippet.env.LS_SELECT_RAW > 0 then
     return sn(nil, i(1, parent.snippet.env.LS_SELECT_RAW))
@@ -53,7 +53,6 @@ local get_visual = function(args, parent)
     return sn(nil, i(1))
   end
 end
-
 -- LaTeX conditional expansions functions with VimTeX
 local tex = {}
 tex.in_mathzone = function() -- math context detection
@@ -83,7 +82,7 @@ end
 return {
   -- General
   s(
-    { trig = "([^%a])mm", regTrig = true, wordTrig = false, snippetType = "autosnippet" },
+    { trig = "([%L])mm", regTrig = true, wordTrig = false, snippetType = "autosnippet" },
     fmta("<>$<>$", {
       f(function(_, snip)
         return snip.captures[1]
@@ -93,7 +92,7 @@ return {
     { condition = tex.in_text }
   ),
   s(
-    { trig = "href", dscr = "hyperrer package for url links" },
+    { trig = "href", dscr = "hyperref package for url links" },
     fmta("\\href{<>}{<>}", { i(1, "url"), i(2, "display name") })
   ),
   -- s(
@@ -144,11 +143,21 @@ return {
   s({ trig = "sq", snippetType = "autosnippet" }, fmta("\\sqrt{<>}", { i(1) }), { condition = tex.in_mathzone }),
 
   -- Logic
-  s({ trig = "fa", snippetType = "autosnippet" }, t("\\forall "), { condition = tex.in_mathzone }),
-  s({ trig = "te", snippetType = "autosnippet" }, t("\\exists "), { condition = tex.in_mathzone }),
-  -- s({ trig = "in", snippetType = "autosnippet" }, { -- conflict in inf
-  --   t("\\in "),
-  -- }, { condition = tex.in_mathzone }),
+  s({ trig = "fa", snippetType = "autosnippet" }, t("\\forall"), { condition = tex.in_mathzone }),
+  s({ trig = "te", snippetType = "autosnippet" }, t("\\exists"), { condition = tex.in_mathzone }),
+  s({ trig = "in ", snippetType = "autosnippet" }, {
+    t("\\in "), -- this one's a bit special since it overlaps with int (integral) and inf (infinity)
+  }, { condition = tex.in_mathzone }),
+  s({ trig = "nin", snippetType = "autosnippet" }, {
+    t("\\notin "),
+  }, { condition = tex.in_mathzone }),
+  s({ trig = "iff", snippetType = "autosnippet" }, {
+    t("\\iff "),
+  }, { condition = tex.in_mathzone }),
+  s({ trig = "imp", snippetType = "autosnippet" }, {
+    t("\\implies "),
+  }, { condition = tex.in_mathzone }),
+
   -- Trigonometry
   s({ trig = "sin", snippetType = "autosnippet" }, fmta("\\sin(<>)", { i(1) }), { condition = tex.in_mathzone }),
   s({ trig = "cos", snippetType = "autosnippet" }, fmta("\\cos(<>)", { i(1) }), { condition = tex.in_mathzone }),
@@ -180,16 +189,16 @@ return {
     { condition = tex.in_mathzone }
   ),
   -- Sets
-  s({ trig = ";N", snippetType = "autosnippet" }, {
+  s({ trig = "N", snippetType = "autosnippet" }, {
     t("\\mathbb{N}"),
   }, { condition = tex.in_mathzone }),
-  s({ trig = ";Z", snippetType = "autosnippet" }, {
+  s({ trig = "Z", snippetType = "autosnippet" }, {
     t("\\mathbb{Z}"),
   }, { condition = tex.in_mathzone }),
-  s({ trig = ";Q", snippetType = "autosnippet" }, {
+  s({ trig = "Q", snippetType = "autosnippet" }, {
     t("\\mathbb{Q}"),
   }, { condition = tex.in_mathzone }),
-  s({ trig = ";R", snippetType = "autosnippet" }, {
+  s({ trig = "R", snippetType = "autosnippet" }, {
     t("\\mathbb{R}"),
   }, { condition = tex.in_mathzone }),
   -- s({ trig = "O ", snippetType = "autosnippet" }, {
