@@ -7,7 +7,8 @@ return {
       system = system:gsub("%s+", "")
 
       if system == "Darwin" then -- macOS
-        vim.g.vimtex_view_method = "skim" -- Zathura hardly works on macOS silicon
+        -- Zathura hardly works on macOS silicon. Skim is a good alternative.
+        vim.g.vimtex_view_method = "skim"
       elseif system == "Linux" then
         vim.g.vimtex_view_method = "zathura"
       end
