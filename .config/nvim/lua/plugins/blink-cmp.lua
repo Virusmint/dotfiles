@@ -31,27 +31,6 @@ return {
         enabled = vim.g.ai_cmp,
       },
     },
-    -- Luasnip setup
-    sources = {
-      default = { "lsp", "luasnip", "path", "buffer" },
-      providers = {
-        -- lsp = {
-        --   name = "lsp",
-        --   enabled = true,
-        --   module = "blink.cmp.sources.lsp",
-        --   kind = "LSP",
-        --   fallbacks = { "snippets", "luasnip", "buffer" },
-        --   score_offset = 100,
-        -- },
-        luasnip = {
-          name = "luasnip",
-          enabled = true,
-          module = "blink.cmp.sources.luasnip",
-          fallbacks = { "snippets" },
-          score_offset = 95,
-        },
-      },
-    },
     snippets = {
       expand = function(snippet)
         require("luasnip").lsp_expand(snippet)
