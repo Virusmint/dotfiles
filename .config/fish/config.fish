@@ -25,9 +25,4 @@ alias icat="kitten icat"
 set -x EDITOR nvim
 set -x VISUAL nvim
 
-# Zathura for mac
-if test $os = Darwin
-    set -x DBUS_SESSION_BUS_ADDRESS unix:path=$DBUS_LAUNCHD_SESSION_BUS_SOCKET
-end
-
 starship init fish | source
