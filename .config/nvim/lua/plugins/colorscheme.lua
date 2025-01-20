@@ -10,7 +10,7 @@ return {
     "sainnhe/gruvbox-material",
     enabled = true,
     config = function()
-      -- vim.g.gruvbox_material_transparent_background = "2"
+      vim.g.gruvbox_material_transparent_background = "2" -- Enable transparent background + statusline
       -- Custom colors
       vim.g.gruvbox_material_colors_override = {
         bg0 = { "#1a1b1e", "233" },
