@@ -137,6 +137,14 @@ return {
 
   -- Math
   s(
+    { trig = "sm", snippetType = "autosnippet" },
+    fmta("\\sum_{<>}^{<>} ", {
+      i(1),
+      i(2),
+    }),
+    { condition = tex.in_mathzone }
+  ),
+  s(
     { trig = "([%w%)%]%}]);", regTrig = true, wordTrig = false, snippetType = "autosnippet" },
     fmta("<>_{<>}", {
       f(function(_, snip)
