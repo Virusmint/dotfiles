@@ -27,7 +27,7 @@ return {
           enabled = not vim.g.ai_cmp, -- Set to true in options.lua to enable AI completion
           auto_trigger = true,
           keymap = {
-            accept = false, -- handled by blink.cmp at http://www.lazyvim.org/extras/coding/blink
+            accept = "<M-Tab>", -- handled by blink.cmp at http://www.lazyvim.org/extras/coding/blink
             next = "<M-]>",
             prev = "<M-[>",
             accept_word = "<M-w>",
