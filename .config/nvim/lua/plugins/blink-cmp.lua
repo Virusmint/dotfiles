@@ -15,7 +15,7 @@ return {
           end
         end,
         "snippet_forward",
-        LazyVim.cmp.map({ "ai_accept" }), -- LazyVim.cmp.actions
+        -- LazyVim.cmp.map({ "ai_accept" }), -- LazyVim.cmp.actions
         "fallback",
       },
       ["<C-p>"] = {}, -- disable completion navigation
