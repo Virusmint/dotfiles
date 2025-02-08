@@ -30,6 +30,7 @@ return {
             { "<localleader>s", group = "split or send" },
             { "<localleader>t", group = "terminal" },
             { "<localleader>v", group = "view" },
+            { "<localleader>l", group = "+vimtex" },
           })
         end,
       },
