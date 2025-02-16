@@ -7,3 +7,4 @@
 -- vim.opt.expandtab = true -- Use spaces instead of tabs
 
 vim.g.ai_cmp = false -- Disable Copilot completion in favor of inline suggestions
+vim.g.vimtex_quickfix_enabled = 0 -- Disable quickfix window for vimtex

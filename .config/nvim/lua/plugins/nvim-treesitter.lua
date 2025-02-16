@@ -26,6 +26,7 @@ return {
         "jsdoc",
         "json",
         "jsonc",
+        -- "latex", -- Vimtex already has syntax highlighting compatible with luasnip
         "lua",
         "luadoc",
         "luap",
@@ -36,7 +37,7 @@ return {
         "query",
         "r",
         "regex",
-        "rnoweb",
+        -- "rnoweb",
         "toml",
         "tsx",
         "typescript",
