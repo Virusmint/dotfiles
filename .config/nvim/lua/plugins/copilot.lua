@@ -40,6 +40,7 @@ return {
           help = true,
         },
       }
+      --
       LazyVim.cmp.actions.ai_accept = function()
         local copilot = require("copilot.suggestion")
         if copilot.is_visible() then
@@ -48,6 +49,21 @@ return {
           return true
         end
       end
+
+      -- Create a command to toggle Copilot
+      local copilot_enabled = false
+      vim.api.nvim_create_user_command("ToggleCopilot", function()
+        if copilot_enabled then
+          vim.cmd("Copilot disable") -- Disable Copilot
+          copilot_enabled = false
+          vim.notify(" Copilot Disabled", vim.log.levels.INFO)
+        else
+          vim.cmd("Copilot enable") -- Enable Copilot
+          copilot_enabled = true
+          vim.notify(" Copilot Enabled", vim.log.levels.INFO)
+        end
+      end, {})
+
       return opts
     end,
   },
