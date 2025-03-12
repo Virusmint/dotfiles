@@ -14,3 +14,6 @@ map("n", "U", "<C-r>", { noremap = true, silent = true, desc = "Redo" })
 
 -- Jump forward fix
 map("n", "<C-I>", "<C-I>", { noremap = true })
+
+-- Toggle Copilot Auto-Trigger
+map("n", "<leader>ac", "<cmd>ToggleCopilot<cr>", { noremap = true, desc = "Toggle Copilot" })
