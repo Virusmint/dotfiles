@@ -106,14 +106,14 @@ return {
     t("\\neq"),
   }, { condition = tex.in_mathzone }),
   s(
-    { trig = "ttt", snippetType = "autosnippet" },
+    { trig = "txt", snippetType = "autosnippet" },
     fmta("\\text{<>}", {
       d(1, get_visual),
     })
   ),
 
   s(
-    { trig = "tts", snippetType = "autosnippet" },
+    { trig = "ttt", snippetType = "autosnippet" },
     fmta("\\texttt{<>}", {
       d(1, get_visual),
     })
