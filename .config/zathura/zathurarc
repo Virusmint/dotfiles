@@ -43,6 +43,7 @@ set render-loading-bg           rgba(227,210,182,1)   # Foreground
 
 set recolor-lightcolor          rgba(26,27,30,1)      # Background
 set recolor-darkcolor           rgba(227,210,182,1)   # Foreground
+set recolor-keephue                                   # Keep Hue
 
 #
 # Startup options
