@@ -26,56 +26,16 @@ local parse = require("luasnip.util.parser").parse_snippet
 local ms = ls.multi_snippet
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
--- Helper functions
-local matrix = function(args, snip)
-  local rows = tonumber(snip.captures[2])
-  local cols = tonumber(snip.captures[3])
-  local nodes = {}
-  local ins_indx = 1
-  for j = 1, rows do
-    table.insert(nodes, r(ins_indx, tostring(j) .. "x1", i(1)))
-    ins_indx = ins_indx + 1
-    for k = 2, cols do
-      table.insert(nodes, t(" & "))
-      table.insert(nodes, r(ins_indx, tostring(j) .. "x" .. tostring(k), i(1)))
-      ins_indx = ins_indx + 1
-    end
-    table.insert(nodes, t({ " \\\\", "" }))
-  end
-  -- fix last node.
-  nodes[#nodes] = t(" \\\\")
-  return sn(nil, nodes)
-end
-local get_visual = function(args, parent)
+-- Custom Helpers
+local tex = require("snippets.tex.utils").condition
+local scaff = require("snippets.tex.utils").scaffold
+-- Ejmastnak
+local function get_visual(_, parent)
   if #parent.snippet.env.LS_SELECT_RAW > 0 then
     return sn(nil, i(1, parent.snippet.env.LS_SELECT_RAW))
   else -- If LS_SELECT_RAW is empty, return a blank insert node
     return sn(nil, i(1))
   end
-end
--- LaTeX conditional expansions functions with VimTeX
-local tex = {}
-tex.in_mathzone = function() -- math context detection
-  return vim.fn["vimtex#syntax#in_mathzone"]() == 1
-end
-tex.in_text = function()
-  return not tex.in_mathzone()
-end
-tex.in_comment = function() -- comment detection
-  return vim.fn["vimtex#syntax#in_comment"]() == 1
-end
-tex.in_env = function(name) -- generic environment detection
-  local is_inside = vim.fn["vimtex#env#is_inside"](name)
-  return (is_inside[1] > 0 and is_inside[2] > 0)
-end
--- tex.in_mathblock = function() -- math block environment detection
---   return tex.in_env("equation") or tex.in_env("align*")
--- end
-tex.in_itemize = function() -- itemize environment detection
-  return tex.in_env("itemize")
-end
-tex.in_tikz = function() -- TikZ picture environment detection
-  return tex.in_env("tikzpicture")
 end
 
 -- LaTeX snippets
@@ -295,7 +255,7 @@ return {
     t("\\omega"),
   }),
   s(
-    { trig = "BEG", snippetType = "autosnippet" },
+    { trig = "BEfG", snippetType = "autosnippet" },
     fmta(
       [[
       \begin{<>}
@@ -353,7 +313,7 @@ return {
     { trig = "BEN", snippetType = "autosnippet" },
     fmta(
       [[
-      \begin{enumerate}[label=\alph*]
+      \begin{enumerate}[label=(\alph*)]
           \item <>
       \end{enumerate}
       ]],
@@ -401,7 +361,7 @@ return {
           end
           return ""
         end),
-        d(1, matrix),
+        d(1, scaff.matrix),
       }
     ),
     { condition = tex.in_mathzone }
