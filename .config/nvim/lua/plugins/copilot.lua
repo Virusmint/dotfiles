@@ -50,20 +50,6 @@ return {
         end
       end
 
-      -- Create a command to toggle Copilot
-      local copilot_enabled = false
-      vim.api.nvim_create_user_command("ToggleCopilot", function()
-        if copilot_enabled then
-          vim.cmd("Copilot disable") -- Disable Copilot
-          copilot_enabled = false
-          vim.notify(" Copilot Disabled", vim.log.levels.INFO)
-        else
-          vim.cmd("Copilot enable") -- Enable Copilot
-          copilot_enabled = true
-          vim.notify(" Copilot Enabled", vim.log.levels.INFO)
-        end
-      end, {})
-
       return opts
     end,
   },
@@ -106,6 +92,12 @@ return {
     keys = {
       { "<c-s>", "<CR>", ft = "copilot-chat", desc = "Submit Prompt", remap = true },
       { "<leader>a", "", desc = "+ai", mode = { "n", "v" } },
+      {
+        "<leader>ac",
+        "<cmd>ToggleCopilotSuggestion<cr>", --ToggleCopilotSuggestion defined in ./commands.lua
+        desc = "Toggle Copilot Suggestions",
+        mode = { "n", "v" },
+      },
       {
         "<leader>aa",
         function()

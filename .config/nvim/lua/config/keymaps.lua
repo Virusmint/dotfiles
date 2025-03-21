@@ -12,8 +12,13 @@ map("n", "<Down>", "<CMD>resize -2<CR>", { noremap = true, silent = true })
 -- Redo change
 map("n", "U", "<C-r>", { noremap = true, silent = true, desc = "Redo" })
 
+-- TODO: fix this in a cleaner way? idk
 -- Jump forward fix
 map("n", "<C-I>", "<C-I>", { noremap = true })
 
--- Toggle Copilot Auto-Trigger
-map("n", "<leader>ac", "<cmd>ToggleCopilot<cr>", { noremap = true, desc = "Toggle Copilot" })
+-- TODO: add which-key group for reloading files
+-- Reload Luasnip snippets
+vim.keymap.set("n", "<leader>rs", function()
+  require("luasnip.loaders.from_lua").load({ paths = { vim.fn.stdpath("config") .. "/lua/snippets/" } })
+  vim.notify("󰑓 LuaSnip snippets reloaded!", vim.log.levels.INFO)
+end, { noremap = true, desc = "󰑓 Reload LuaSnip" })
