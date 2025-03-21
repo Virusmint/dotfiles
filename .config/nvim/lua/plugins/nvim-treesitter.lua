@@ -47,6 +47,10 @@ return {
         "yaml",
         "hyprlang", -- Added for Hyprlang support
       },
+      highlight = {
+        enable = true,
+        disable = { "latex", "rnoweb" },
+      },
     },
   },
 }

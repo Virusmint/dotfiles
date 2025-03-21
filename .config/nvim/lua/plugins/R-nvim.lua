@@ -4,6 +4,7 @@ return {
     lazy = false,
     opts = {
       -- Create a table with the options to be passed to setup()
+      auto_quit = true,
       R_args = { "--quiet", "--no-save" },
       hook = {
         on_filetype = function()
@@ -30,11 +31,10 @@ return {
             { "<localleader>s", group = "split or send" },
             { "<localleader>t", group = "terminal" },
             { "<localleader>v", group = "view" },
-            { "<localleader>l", group = "+vimtex" },
           })
         end,
       },
-      pdfviewer = "zathura",
+      pdfviewer = vim.g.vimtex_view_method,
     },
     config = function(_, opts)
       vim.g.rout_follow_colorscheme = true
