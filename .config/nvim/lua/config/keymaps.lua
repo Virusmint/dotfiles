@@ -16,9 +16,17 @@ map("n", "U", "<C-r>", { noremap = true, silent = true, desc = "Redo" })
 -- Jump forward fix
 map("n", "<C-I>", "<C-I>", { noremap = true })
 
+-- Fix spelling mistakes
+
+-- Luasnip Choice Node
+map("i", "<C-j>", "<Plug>luasnip-next-choice", { noremap = false })
+map("s", "<C-j>", "<Plug>luasnip-next-choice", { noremap = false })
+map("i", "<C-k>", "<Plug>luasnip-prev-choice", { noremap = false })
+map("s", "<C-k>", "<Plug>luasnip-prev-choice", { noremap = false })
+
 -- TODO: add which-key group for reloading files
 -- Reload Luasnip snippets
-vim.keymap.set("n", "<leader>rs", function()
+map("n", "<leader>rs", function()
   require("luasnip.loaders.from_lua").load({ paths = { vim.fn.stdpath("config") .. "/lua/snippets/" } })
   vim.notify("󰑓 LuaSnip snippets reloaded!", vim.log.levels.INFO)
 end, { noremap = true, desc = "󰑓 Reload LuaSnip" })
