@@ -39,6 +39,15 @@ local function get_visual(_, parent)
   end
 end
 
+local function get_visual_fn(_, parent)
+  print(parent.snippet.LS_SELECT_RAW)
+  if #parent.snippet.env.LS_SELECT_RAW > 0 then
+    return parent.snippet.env.LS_SELECT_RAW
+  else
+    return ""
+  end
+end
+
 local M = {}
 
 local symbols = {}
@@ -70,12 +79,19 @@ local auto_backslash_specs = {
 
 -- for _, v in ipairs(auto_backslash_specs) do
 --
+local function fn(args, parent, user_args)
+  print(vim.inspect(args))
+  return "[" .. args[1][1] .. user_args .. "]"
+end
 
+local function simple_restore(args, _)
+  return sn(nil, { i(1, args[1]), r(2, "dyn", i(nil, "user_text")) })
+end
 -- LaTeX snippets
 return {
   -- General
   s(
-    { trig = "([%s])mk", trigEngine = "pattern", wordTrig = false, snippetType = "autosnippet" },
+    { trig = "([%s])sd", trigEngine = "pattern", wordTrig = false, snippetType = "autosnippet" },
     fmta("<>$<>$", {
       f(function(_, snip)
         return snip.captures[1]
@@ -84,8 +100,42 @@ return {
     }),
     { condition = tex.in_text }
   ),
+  -- s(
+  --   { trig = "lr", snippetType = "autosnippet" },
+  --   c(1, {
+  --     fmta("\\left( <> \\right)", { d(1, get_visual) }),
+  --     fmta("\\left[ <> \\right]", { d(1, get_visual) }),
+  --     fmta("\\left\\{ <> \\right\\}", { d(1, get_visual) }),
+  --   }),
+  --   { condition = tex.in_mathzone }
+  -- ),
+
   s(
-    { trig = "href", dscr = "hyperref package for url links", autosnippet = true },
+    { trig = "lr", snippetType = "autosnippet" },
+    c(1, {
+      sn(nil, { t("\\left("), r(1, "selection"), t("\\right)") }),
+      sn(nil, { t("\\left["), r(1, "selection"), t("\\right]") }),
+      sn(nil, { t("\\left\\{"), r(1, "selection"), t("\\right\\}") }),
+    }),
+    { stored = {
+      ["selection"] = d(1, get_visual),
+    }, condition = tex.in_mathzone }
+  ),
+
+  s("paren", {
+    c(1, {
+      sn(nil, { t("("), r(1, "user_text"), t(")") }),
+      sn(nil, { t("["), r(1, "user_text"), t("]") }),
+      sn(nil, { t("{"), r(1, "user_text"), t("}") }),
+    }),
+  }, {
+    stored = {
+      ["user_text"] = d(1, get_visual),
+    },
+  }),
+
+  s(
+    { trig = "href", dscr = "hyperref package for url links", snippetType = "autosnippet" },
     fmta("\\href{<>}{<>}", { i(1, "url"), i(2, "display name") })
   ),
   -- Math logical operators
@@ -140,8 +190,8 @@ return {
   s(
     { trig = "sm", snippetType = "autosnippet" },
     fmta("\\sum_{<>}^{<>} ", {
-      i(1),
-      i(2),
+      i(1, "i=0"),
+      i(2, "\\infty"),
     }),
     { condition = tex.in_mathzone }
   ),
@@ -261,6 +311,31 @@ return {
     }),
     { condition = tex.in_mathzone }
   ),
+  s(
+    { trig = "\\Var", snippetType = "autosnippet" },
+    c(1, {
+      fmta("\\Var[<>]", { i(1) }),
+      fmta("\\Var\\left[ <> \\right]", { i(1) }),
+    }),
+    { condition = tex.in_mathzone }
+  ),
+  s(
+    { trig = "\\Cov", snippetType = "autosnippet" },
+    c(1, {
+      fmta("\\text{{Cov}}[<>]", { i(1) }),
+      fmta("\\text{{Cov}}\\left[ <> \\right]", { i(1) }),
+    }),
+    { condition = tex.in_mathzone }
+  ),
+  s(
+    { trig = "\\Corr", snippetType = "autosnippet" },
+    c(1, {
+      fmta("\\text{{Corr}}[<>]", { i(1) }),
+      fmta("\\text{{Corr}}\\left[ <> \\right]", { i(1) }),
+    }),
+    { condition = tex.in_mathzone }
+  ),
+
   -- Sets
   -- s({ trig = ";N", snippetType = "autosnippet" }, {
   --   t("\\mathbb{N}"),
@@ -347,7 +422,7 @@ return {
   ),
   -- Transpose
   s(
-    { trig = "([%}])T", trigEngine = "pattern", wordTrig = false, snippetType = "autosnippet" },
+    { trig = "([%}%)]).T", trigEngine = "pattern", wordTrig = false, snippetType = "autosnippet" },
     fmta("<>^{\\top}", {
       f(function(_, snip)
         return snip.captures[1]

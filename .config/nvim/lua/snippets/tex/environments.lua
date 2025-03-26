@@ -28,6 +28,8 @@ local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
 local M = {}
 
+-- Add environments here
+
 M = {
   s(
     { trig = "BEG", snippetType = "autosnippet" },
@@ -38,6 +40,19 @@ M = {
       \end{<>}
       ]],
       { i(1), i(0), rep(1) },
+      { condition = line_begin }
+    )
+  ),
+  s(
+    { trig = "BQQ", snippetType = "autosnippet" },
+    fmta(
+      [[
+        \begin{question}
+          <>
+        \end{question}
+        \newpage
+        ]],
+      { i(0) },
       { condition = line_begin }
     )
   ),
