@@ -26,26 +26,6 @@ local parse = require("luasnip.util.parser").parse_snippet
 local ms = ls.multi_snippet
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
--- Custom Helpers
-local tex = require("snippets.tex.utils").condition
-local scaff = require("snippets.tex.utils").scaffold
+local M = {}
 
-return {
-  -- TODO: bigO notation
-  s(
-    { trig = "OO", snippetType = "autosnippet", dscr = "big O" },
-    fmta("\\bigO(<>)", {
-      i(1),
-    }),
-    { condition = tex.in_mathzone }
-  ),
-  -- TODO: Algorithm Blocks
-  -- s(
-  --   { trig = "BALG", snippetType = "autosnippet", dscr = "big O" },
-  --   fmta("\\bigO(<>)", {
-  --     i(1),
-  --   }),
-  --   { condition = tex.in_mathzone }
-  -- ),
-  -- TODO: Pseudocode definition
-}
+return M

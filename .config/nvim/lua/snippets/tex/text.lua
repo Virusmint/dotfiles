@@ -26,26 +26,47 @@ local parse = require("luasnip.util.parser").parse_snippet
 local ms = ls.multi_snippet
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
--- Custom Helpers
-local tex = require("snippets.tex.utils").condition
-local scaff = require("snippets.tex.utils").scaffold
+local M = {}
+
+local function fn(
+  args, -- text from i(2) in this example i.e. { { "456" } }
+  parent, -- parent snippet or parent node
+  user_args -- user_args from opts.user_args
+)
+  return "[" .. args[1][1] .. user_args .. "]"
+end
+
+local function bash(_, _, command)
+  local file = io.popen(command, "r")
+  local result = {}
+  -- check nil
+  if file == nil then
+    return result
+  end
+  for line in file:lines() do
+    table.insert(result, line)
+  end
+  return result
+end
 
 return {
-  -- TODO: bigO notation
-  s(
-    { trig = "OO", snippetType = "autosnippet", dscr = "big O" },
-    fmta("\\bigO(<>)", {
-      i(1),
-    }),
-    { condition = tex.in_mathzone }
-  ),
-  -- TODO: Algorithm Blocks
+  s("bash", f(bash, {}, { user_args = { "ls" } })),
   -- s(
-  --   { trig = "BALG", snippetType = "autosnippet", dscr = "big O" },
-  --   fmta("\\bigO(<>)", {
-  --     i(1),
-  --   }),
-  --   { condition = tex.in_mathzone }
+  --   "trig",
+  --   c(1, {
+  --     t("Ugh boring, a text node"),
+  --     i(nil, "At least I can edit something now..."),
+  --     f(function(args)
+  --       return "Still only counts as text!!"
+  --     end, {}),
+  --   })
   -- ),
-  -- TODO: Pseudocode definition
+  --
+  s(
+    "trig",
+    sn(nil, {
+      t("basically just text "),
+      i(1, "And an insertNode."),
+    })
+  ),
 }
