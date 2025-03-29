@@ -26,15 +26,6 @@ local parse = require("luasnip.util.parser").parse_snippet
 local ms = ls.multi_snippet
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
-local M = {}
-local function fn(
-  args, -- text from i(2) in this example i.e. { { "456" } }
-  parent, -- parent snippet or parent node
-  user_args -- user_args from opts.user_args
-)
-  return "[" .. args[1][1] .. user_args .. "]"
-end
-
 local function bash(_, _, command)
   local file = io.popen(command, "r")
   local result = {}
@@ -48,24 +39,41 @@ local function bash(_, _, command)
   return result
 end
 
+-- Ejmastnak
+local function get_visual(_, parent)
+  if #parent.snippet.env.LS_SELECT_RAW > 0 then
+    return sn(nil, i(1, parent.snippet.env.LS_SELECT_RAW))
+  else -- If LS_SELECT_RAW is empty, return a blank insert node
+    return sn(nil, i(1))
+  end
+end
+
 return {
-  s("bash", f(bash, {}, { user_args = { "ls" } })),
-  -- s(
-  --   "trig",
-  --   c(1, {
-  --     t("Ugh boring, a text node"),
-  --     i(nil, "At least I can edit something now..."),
-  --     f(function(args)
-  --       return "Still only counts as text!!"
-  --     end, {}),
-  --   })
-  -- ),
-  --
+  -- Non-math Fonts
   s(
-    "trig",
-    sn(nil, {
-      t("basically just text "),
-      i(1, "And an insertNode."),
+    -- I use \\text{} a bit more commonly than the others so a 2-letter trigger is more convenient.
+    { trig = "tq", snippetType = "autosnippet", dscr = "Text" },
+    fmta("\\text{<>}", {
+      d(1, get_visual),
     })
   ),
+  s(
+    { trig = "ttt", snippetType = "autosnippet", dscr = "Typewriter" },
+    fmta("\\texttt{<>}", {
+      d(1, get_visual),
+    })
+  ),
+  s(
+    { trig = "tit", snippetType = "autosnippet", dscr = "Italic" },
+    fmta("\\textit{<>}", {
+      d(1, get_visual),
+    })
+  ),
+  s(
+    { trig = "tbt", snippetType = "autosnippet", dscr = "Bold" },
+    fmta("\\textbf{<>}", {
+      d(1, get_visual),
+    })
+  ),
+  -- Math Fonts
 }

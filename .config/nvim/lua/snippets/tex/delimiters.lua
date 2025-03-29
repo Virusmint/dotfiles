@@ -26,6 +26,26 @@ local parse = require("luasnip.util.parser").parse_snippet
 local ms = ls.multi_snippet
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
-local M = {}
+-- Custom Helpers
+local tex = require("snippets.tex.utils").condition
+local scaff = require("snippets.tex.utils").scaffolding
 
-return M
+return {
+  s(
+    { trig = "lr", snippetType = "autosnippet", dscr = "Left-Right Delimiters" },
+    d(1, function(_, parent)
+      local match = parent.snippet.env.LS_SELECT_RAW
+      local snippet_node = i(1, match)
+      return sn(nil, {
+        c(1, {
+          sn(nil, { t("\\left( "), r(1, "selection", snippet_node), t(" \\right)") }),
+          sn(nil, { t("\\left[ "), r(1, "selection"), t(" \\right]") }),
+          sn(nil, { t("\\left\\{ "), r(1, "selection"), t(" \\right\\}") }),
+        }),
+      })
+    end),
+    {
+      condition = tex.in_mathzone,
+    }
+  ),
+}

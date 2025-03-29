@@ -39,59 +39,10 @@ local function get_visual(_, parent)
   end
 end
 
-local function get_visual_fn(_, parent)
-  print(parent.snippet.LS_SELECT_RAW)
-  if #parent.snippet.env.LS_SELECT_RAW > 0 then
-    return parent.snippet.env.LS_SELECT_RAW
-  else
-    return ""
-  end
-end
-
-local M = {}
-
-local symbols = {}
-
-local auto_backslash_specs = {
-  "arcsin",
-  "sin",
-  "arccos",
-  "cos",
-  "arctan",
-  "tan",
-  "cot",
-  "csc",
-  "sec",
-  "log",
-  "ln",
-  "exp",
-  "ast",
-  "star",
-  "perp",
-  "sup",
-  "inf",
-  "det",
-  "max",
-  "min",
-  "argmax",
-  "argmin",
-}
-
--- for _, v in ipairs(auto_backslash_specs) do
---
-local function fn(args, parent, user_args)
-  print(vim.inspect(args))
-  return "[" .. args[1][1] .. user_args .. "]"
-end
-
-local function simple_restore(args, _)
-  return sn(nil, { i(1, args[1]), r(2, "dyn", i(nil, "user_text")) })
-end
--- LaTeX snippets
 return {
-  -- General
+  -- Inline math
   s(
-    { trig = "([%s])sd", trigEngine = "pattern", wordTrig = false, snippetType = "autosnippet" },
+    { trig = "mk", trigEngine = "pattern", wordTrig = false, snippetType = "autosnippet" },
     fmta("<>$<>$", {
       f(function(_, snip)
         return snip.captures[1]
@@ -100,114 +51,56 @@ return {
     }),
     { condition = tex.in_text }
   ),
-  -- s(
-  --   { trig = "lr", snippetType = "autosnippet" },
-  --   c(1, {
-  --     fmta("\\left( <> \\right)", { d(1, get_visual) }),
-  --     fmta("\\left[ <> \\right]", { d(1, get_visual) }),
-  --     fmta("\\left\\{ <> \\right\\}", { d(1, get_visual) }),
-  --   }),
-  --   { condition = tex.in_mathzone }
-  -- ),
 
-  s(
-    { trig = "lr", snippetType = "autosnippet" },
-    c(1, {
-      sn(nil, { t("\\left("), r(1, "selection"), t("\\right)") }),
-      sn(nil, { t("\\left["), r(1, "selection"), t("\\right]") }),
-      sn(nil, { t("\\left\\{"), r(1, "selection"), t("\\right\\}") }),
-    }),
-    { stored = {
-      ["selection"] = d(1, get_visual),
-    }, condition = tex.in_mathzone }
-  ),
+  -- Logical operators
+  s({ trig = "leq", snippetType = "autosnippet", dscr = "\\leq" }, { t("\\leq") }, { condition = tex.in_mathzone }),
+  s({ trig = "geq", snippetType = "autosnippet", dscr = "\\geq" }, { t("\\geq") }, { condition = tex.in_mathzone }),
+  s({ trig = "neq", snippetType = "autosnippet", dscr = "\\neq" }, { t("\\neq") }, { condition = tex.in_mathzone }),
 
-  s("paren", {
-    c(1, {
-      sn(nil, { t("("), r(1, "user_text"), t(")") }),
-      sn(nil, { t("["), r(1, "user_text"), t("]") }),
-      sn(nil, { t("{"), r(1, "user_text"), t("}") }),
-    }),
-  }, {
-    stored = {
-      ["user_text"] = d(1, get_visual),
-    },
-  }),
-
-  s(
-    { trig = "href", dscr = "hyperref package for url links", snippetType = "autosnippet" },
-    fmta("\\href{<>}{<>}", { i(1, "url"), i(2, "display name") })
-  ),
-  -- Math logical operators
-  s({ trig = "leq", snippetType = "autosnippet", dscr = "\\leq" }, {
-    t("\\leq"),
-  }, { condition = tex.in_mathzone }),
-  s({ trig = "geq", snippetType = "autosnippet", dscr = "\\geq" }, {
-    t("\\geq"),
-  }, { condition = tex.in_mathzone }),
-  s({ trig = "neq", snippetType = "autosnippet", dscr = "\\neq" }, {
-    t("\\neq"),
-  }, { condition = tex.in_mathzone }),
-
-  -- Text
-  s(
-    { trig = "ttw", snippetType = "autosnippet" },
-    fmta("\\text{<>}", {
-      d(1, get_visual),
-    })
-  ),
-
-  s(
-    { trig = "ttt", snippetType = "autosnippet" },
-    fmta("\\texttt{<>}", {
-      d(1, get_visual),
-    })
-  ),
-  s(
-    { trig = "tte", snippetType = "autosnippet", dscr = "Expands 'tii' into LaTeX's textit{} command." },
-    fmta("\\textit{<>}", {
-      d(1, get_visual),
-    })
-  ),
-  s(
-    { trig = "ttb", snippetType = "autosnippet", dscr = "Expands 'tbb' into LaTeX's textbf{} command." },
-    fmta("\\textbf{<>}", {
-      d(1, get_visual),
-    })
-  ),
   -- Symbols
-  s({ trig = "inf", snippetType = "autosnippet" }, {
-    t("\\infty"),
-  }, { condition = tex.in_mathzone }),
-  s({ trig = "ninf", snippetType = "autosnippet" }, {
-    t("-\\infty"),
-  }, { condition = tex.in_mathzone }),
-  -- s({ trig = ";x", snippetType = "autosnippet" }, {
-  --   t("\\times"),
-  -- }, { condition = tex.in_mathzone }),
+  s({ trig = "inf", snippetType = "autosnippet" }, { t("\\infty") }, { condition = tex.in_mathzone }),
+  s({ trig = "ninf", snippetType = "autosnippet" }, { t("-\\infty") }, { condition = tex.in_mathzone }),
 
-  -- Math
+  -- Aggregators
   s(
-    { trig = "sm", snippetType = "autosnippet" },
-    fmta("\\sum_{<>}^{<>} ", {
-      i(1, "i=0"),
-      i(2, "\\infty"),
-    }),
+    { trig = "sm", snippetType = "autosnippet", dscr = "Summation" },
+    fmta("\\sum_{<>}^{<>} ", { i(1, "i=0"), i(2, "\\infty") }),
     { condition = tex.in_mathzone }
   ),
-
   s(
-    { trig = "prod", snippetType = "autosnippet" },
+    { trig = "prod", snippetType = "autosnippet", dscr = "Product" },
     c(1, {
       fmta("\\prod_{<>}^{<>} <> ", { i(1, "i=1"), i(2, "n"), i(3) }),
       fmta("\\prod_{<>} <> ", { i(1), i(2) }),
     }),
     { condition = tex.in_mathzone }
   ),
-
-  -- Subscripts and superscripts
   s(
-    { trig = "([%w%)%]%}]);", trigEngine = "pattern", wordTrig = false, snippetType = "autosnippet" },
+    { trig = "bU", snippetType = "autosnippet", dscr = "Big Union" },
+    c(1, {
+      fmta("\\bigcup_{<>}^{<>} ", { i(1, "i=1"), i(2, "n") }),
+      fmta("\\bigcup_{<>} ", { i(1) }),
+    }),
+    { condition = tex.in_mathzone }
+  ),
+  s(
+    { trig = "bI", snippetType = "autosnippet", dscr = "Big Intersection" },
+    c(1, {
+      fmta("\\bigcap_{<>}^{<>} ", { i(1, "i=1"), i(2, "n") }),
+      fmta("\\bigcap_{<>} ", { i(1) }),
+    }),
+    { condition = tex.in_mathzone }
+  ),
+
+  -- Subscripts and Superscripts
+  s(
+    {
+      trig = "([%w%)%]%}]);",
+      trigEngine = "pattern",
+      wordTrig = false,
+      snippetType = "autosnippet",
+      dscr = "Subscript",
+    },
     fmta("<>_{<>}", {
       f(function(_, snip)
         return snip.captures[1]
@@ -217,7 +110,31 @@ return {
     { condition = tex.in_mathzone }
   ),
   s(
-    { trig = "([%w%)%]%}]):", trigEngine = "pattern", wordTrig = false, snippetType = "autosnippet" },
+    {
+      trig = "([%a%}])([%d])",
+      trigEngine = "pattern",
+      wordTrig = false,
+      snippetType = "autosnippet",
+      dscr = "Subscript Basic Index",
+    },
+    fmta("<>_{<>}", {
+      f(function(_, snip)
+        return snip.captures[1]
+      end),
+      f(function(_, snip)
+        return snip.captures[2]
+      end),
+    }),
+    { condition = tex.in_mathzone }
+  ),
+  s(
+    {
+      trig = "([%w%)%]%}]):",
+      trigEngine = "pattern",
+      wordTrig = false,
+      snippetType = "autosnippet",
+      dscr = "Superscript",
+    },
     fmta("<>^{<>}", {
       f(function(_, snip)
         return snip.captures[1]
@@ -227,43 +144,65 @@ return {
     { condition = tex.in_mathzone }
   ),
   s(
-    { trig = "ff", snippetType = "autosnippet" },
-    fmta("\\frac{<>}{<>}", { i(1), i(2) }),
+    { trig = "([%w%)%]%}])sd", trigEngine = "pattern", wordTrig = false, snippetType = "autosnippet", dscr = "Square" },
+    fmta("<>^{2}", {
+      f(function(_, snip)
+        return snip.captures[1]
+      end),
+    }),
+    { condition = tex.in_mathzone }
+  ),
+  s(
+    { trig = "([%w%)%]%}])sf", trigEngine = "pattern", wordTrig = false, snippetType = "autosnippet", dscr = "Cube" },
+    fmta("<>^{3}", {
+      f(function(_, snip)
+        return snip.captures[1]
+      end),
+    }),
     { condition = tex.in_mathzone }
   ),
 
+  s(
+    { trig = "ff", snippetType = "autosnippet", dscr = "Fraction" },
+    fmta("\\frac{<>}{<>}", { d(1, get_visual), i(2) }),
+    { condition = tex.in_mathzone }
+  ),
+  -- Basic Functions
   s(
     { trig = "norm", snippetType = "autosnippet" },
     fmta("\\lVert <> \\rVert ", { i(1) }),
     { condition = tex.in_mathzone }
   ),
   s(
-    { trig = "abs", snippetType = "autosnippet" },
+    { trig = "abs", snippetType = "autosnippet", dscr = "Absolute Value" },
     fmta("\\lvert <> \\rvert ", { i(1) }),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "sqrt", snippetType = "autosnippet" }, fmta("\\sqrt{<>}", { i(1) }), { condition = tex.in_mathzone }),
+  s(
+    { trig = "sq", snippetType = "autosnippet", dscr = "Square Root" },
+    fmta("\\sqrt{<>}", { i(1) }),
+    { condition = tex.in_mathzone }
+  ),
 
   -- Logic
-  s({ trig = "fa", snippetType = "autosnippet" }, t("\\forall"), { condition = tex.in_mathzone }),
-  s({ trig = "te", snippetType = "autosnippet" }, t("\\exists"), { condition = tex.in_mathzone }),
-  -- s({ trig = "in", snippetType = "autosnippet" }, {
-  --   t("\\in"), -- this one's a bit special since it overlaps with int (integral) and inf (infinity)
-  -- }, { condition = tex.in_mathzone }),
-  s({ trig = "notin", snippetType = "autosnippet" }, {
-    t("\\notin"),
-  }, { condition = tex.in_mathzone }),
-  s({ trig = "iff", snippetType = "autosnippet" }, {
-    t("\\iff "),
-  }, { condition = tex.in_mathzone }),
-  s({ trig = "imp", snippetType = "autosnippet" }, {
-    t("\\implies"),
-  }, { condition = tex.in_mathzone }),
+  s({ trig = "fa", snippetType = "autosnippet", dscr = "∀" }, t("\\forall"), { condition = tex.in_mathzone }),
+  s({ trig = "te", snippetType = "autosnippet", dscr = "∃" }, t("\\exists"), { condition = tex.in_mathzone }),
+  s({ trig = "ih", snippetType = "autosnippet", dscr = "∈" }, { t("\\in") }, { condition = tex.in_mathzone }),
+  s({ trig = "nih", snippetType = "autosnippet", dscr = "∉" }, { t("\\notin") }, { condition = tex.in_mathzone }),
+  s({ trig = "iff", snippetType = "autosnippet", dscr = "<=>" }, { t("\\iff") }, { condition = tex.in_mathzone }),
+  s({ trig = "imp", snippetType = "autosnippet", dscr = "=>" }, { t("\\implies") }, { condition = tex.in_mathzone }),
+  s({ trig = "impb", snippetType = "autosnippet", dscr = "<=" }, { t("\\impliedby") }, { condition = tex.in_mathzone }),
+  s({ trig = "neg", snippetType = "autosnippet", dscr = "¬" }, { t("\\neg") }, { condition = tex.in_mathzone }),
+  s({ trig = "and", snippetType = "autosnippet", dscr = "∧" }, { t("\\land") }, { condition = tex.in_mathzone }),
+  s({ trig = "or", snippetType = "autosnippet", dscr = "∨" }, { t("\\lor") }, { condition = tex.in_mathzone }),
 
   -- Trigonometry
   s({ trig = "sin", snippetType = "autosnippet" }, fmta("\\sin(<>)", { i(1) }), { condition = tex.in_mathzone }),
   s({ trig = "cos", snippetType = "autosnippet" }, fmta("\\cos(<>)", { i(1) }), { condition = tex.in_mathzone }),
   s({ trig = "tan", snippetType = "autosnippet" }, fmta("\\tan(<>)", { i(1) }), { condition = tex.in_mathzone }),
+  s({ trig = "csc", snippetType = "autosnippet" }, fmta("\\csc(<>)", { i(1) }), { condition = tex.in_mathzone }),
+  s({ trig = "sec", snippetType = "autosnippet" }, fmta("\\sec(<>)", { i(1) }), { condition = tex.in_mathzone }),
+  s({ trig = "cot", snippetType = "autosnippet" }, fmta("\\cot(<>)", { i(1) }), { condition = tex.in_mathzone }),
   s(
     { trig = "([%A])ee", trigEngine = "pattern", wordTrig = false, snippetType = "autosnippet" },
     fmta("<>e^{<>}", {
@@ -274,27 +213,40 @@ return {
     }),
     { condition = tex.in_mathzone }
   ),
-  -- s(
-  --
-  -- )
-  -- Calculus
   s(
-    { trig = "lm", snippetType = "autosnippet" },
-    fmta("\\lim_{<> \\to <>} <>", { i(1), i(2), i(3) }),
+    { trig = "([%A])xp", trigEngine = "pattern", wordTrig = false, snippetType = "autosnippet" },
+    fmta("<>\\exp{<>}", {
+      f(function(_, snip)
+        return snip.captures[1]
+      end),
+      d(1, get_visual),
+    }),
+    { condition = tex.in_mathzone }
+  ),
+
+  -- Calculus
+  -- TODO: Add limsup and liminf
+  s(
+    { trig = "lm", snippetType = "autosnippet", dscr = "Limit" },
+    c(1, {
+      fmta("\\lim_{<> \\to <>} ", { i(1, "x"), i(2, "\\infty") }),
+      fmta("\\limsup_{<> \\to <>} ", { i(1, "x"), i(2, "\\infty") }),
+      fmta("\\liminf_{<> \\to <>} ", { i(1, "x"), i(2, "\\infty") }),
+    }),
     { condition = tex.in_mathzone }
   ),
   s(
-    { trig = "dd", snippetType = "autosnippet" },
+    { trig = "dd", snippetType = "autosnippet", dscr = "Derivative" },
     fmta("\\dv{<>}{<>}", { i(1), i(2, "x") }),
     { condition = tex.in_mathzone }
   ),
   s(
-    { trig = "pd", snippetType = "autosnippet" },
+    { trig = "pd", snippetType = "autosnippet", dscr = "Partial Derivative" },
     fmta("\\frac{\\partial <>}{\\partial <>}", { i(1), i(2) }),
     { condition = tex.in_mathzone }
   ),
   s(
-    { trig = "int", snippetType = "autosnippet" },
+    { trig = "int", snippetType = "autosnippet", dscr = "Integral" },
     c(1, {
       fmta("\\int_{<>}^{<>} <> \\diff <> ", { i(1, "-\\infty"), i(2, "\\infty"), i(3), i(4, "x") }),
       fmta("\\int_{<>} <> \\diff <> ", { i(1), i(2), i(3) }),
@@ -336,24 +288,8 @@ return {
     { condition = tex.in_mathzone }
   ),
 
-  -- Sets
-  -- s({ trig = ";N", snippetType = "autosnippet" }, {
-  --   t("\\mathbb{N}"),
-  -- }, { condition = tex.in_mathzone }),
-  -- s({ trig = ";Z", snippetType = "autosnippet" }, {
-  --   t("\\mathbb{Z}"),
-  -- }, { condition = tex.in_mathzone }),
-  -- s({ trig = ";Q", snippetType = "autosnippet" }, {
-  --   t("\\mathbb{Q}"),
-  -- }, { condition = tex.in_mathzone }),
-  -- s({ trig = ";R", snippetType = "autosnippet" }, {
-  --   t("\\mathbb{R}"),
-  -- }, { condition = tex.in_mathzone }),
-  -- s({ trig = "O ", snippetType = "autosnippet" }, {
-  --   t("\\mathbb{O}"),
-  -- }),
-
   -- Greek letters
+  -- TODO: Fix these
   -- s({ trig = ";a", snippetType = "autosnippet" }, {
   --   t("\\alpha"),
   -- }),
@@ -390,6 +326,8 @@ return {
   -- s({ trig = ";w", snippetType = "autosnippet" }, {
   --   t("\\omega"),
   -- }),
+
+  -- Equation Stuff
   s(
     { trig = "([%w%s])==", trigEngine = "pattern", wordTrig = false, snippetType = "autosnippet" },
     fmta("<>&= ", {
@@ -410,9 +348,10 @@ return {
   ),
   -- TODO: Vector space perp
 
-  -- Matrix Notation
+  -- Matrices
+  -- TODO: allow for greek letters
   s(
-    { trig = ";([%a])", trigEngine = "pattern", wordTrig = false, snippetType = "autosnippet" },
+    { trig = ";([%a])", trigEngine = "pattern", wordTrig = false },
     fmta("\\mathbf{<>}", {
       f(function(_, snip)
         return snip.captures[1]
@@ -420,9 +359,14 @@ return {
     }),
     { condition = tex.in_mathzone }
   ),
-  -- Transpose
   s(
-    { trig = "([%}%)]).T", trigEngine = "pattern", wordTrig = false, snippetType = "autosnippet" },
+    {
+      trig = "([%}%)])([tT])",
+      trigEngine = "pattern",
+      wordTrig = false,
+      snippetType = "autosnippet",
+      dscr = "Transpose",
+    },
     fmta("<>^{\\top}", {
       f(function(_, snip)
         return snip.captures[1]

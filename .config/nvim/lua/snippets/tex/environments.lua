@@ -26,13 +26,9 @@ local parse = require("luasnip.util.parser").parse_snippet
 local ms = ls.multi_snippet
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
-local M = {}
-
--- Add environments here
-
-M = {
+return {
   s(
-    { trig = "BEG", snippetType = "autosnippet" },
+    { trig = "BEG", snippetType = "autosnippet", dscr = "Generic Environment" },
     fmta(
       [[
       \begin{<>}
@@ -44,7 +40,7 @@ M = {
     )
   ),
   s(
-    { trig = "BQQ", snippetType = "autosnippet" },
+    { trig = "BQ", snippetType = "autosnippet", dscr = "Question Environment" },
     fmta(
       [[
         \begin{question}
@@ -57,7 +53,7 @@ M = {
     )
   ),
   s(
-    { trig = "BSAL", snippetType = "autosnippet" },
+    { trig = "BSAL", snippetType = "autosnippet", dscr = "Align* Environment" },
     fmta(
       [[
       \begin{align*}
@@ -69,7 +65,7 @@ M = {
     )
   ),
   s(
-    { trig = "BEQ", snippetType = "autosnippet" },
+    { trig = "BEQ", snippetType = "autosnippet", dscr = "Equation Environment" },
     fmta(
       [[
       \begin{equation}
@@ -81,7 +77,7 @@ M = {
     )
   ),
   s(
-    { trig = "BEN", snippetType = "autosnippet" },
+    { trig = "BEN", snippetType = "autosnippet", "Enumerate Environment" },
     fmta(
       [[
       \begin{enumerate}[label=(\alph*)]
@@ -93,7 +89,7 @@ M = {
     { condition = line_begin }
   ),
   s(
-    { trig = "BIT", snippetType = "autosnippet" },
+    { trig = "BIT", snippetType = "autosnippet", dscr = "Itemize Environment" },
     fmta(
       [[
       \begin{itemize}
@@ -104,6 +100,20 @@ M = {
     ),
     { condition = line_begin }
   ),
+  -- Figures, Tables, etc.
+  s(
+    { trig = "BFIG", snippetType = "autosnippet", dscr = "Figure Environment" },
+    fmta(
+      [[
+      \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\textwidth]{<>}
+        \caption{<>}
+        \label{<>}
+      \end{figure}
+      ]],
+      { i(1), i(2), i(3) }
+    ),
+    { condition = line_begin }
+  ),
 }
-
-return M

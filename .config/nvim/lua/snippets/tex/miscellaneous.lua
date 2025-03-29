@@ -26,47 +26,14 @@ local parse = require("luasnip.util.parser").parse_snippet
 local ms = ls.multi_snippet
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
-local M = {}
-
-local function fn(
-  args, -- text from i(2) in this example i.e. { { "456" } }
-  parent, -- parent snippet or parent node
-  user_args -- user_args from opts.user_args
-)
-  return "[" .. args[1][1] .. user_args .. "]"
-end
-
-local function bash(_, _, command)
-  local file = io.popen(command, "r")
-  local result = {}
-  -- check nil
-  if file == nil then
-    return result
-  end
-  for line in file:lines() do
-    table.insert(result, line)
-  end
-  return result
-end
+-- Custom Helpers
+local tex = require("snippets.tex.utils").condition
+local scaff = require("snippets.tex.utils").scaffolding
 
 return {
-  s("bash", f(bash, {}, { user_args = { "ls" } })),
-  -- s(
-  --   "trig",
-  --   c(1, {
-  --     t("Ugh boring, a text node"),
-  --     i(nil, "At least I can edit something now..."),
-  --     f(function(args)
-  --       return "Still only counts as text!!"
-  --     end, {}),
-  --   })
-  -- ),
-  --
   s(
-    "trig",
-    sn(nil, {
-      t("basically just text "),
-      i(1, "And an insertNode."),
-    })
+    { trig = "hr", snippetType = "autosnippet", dscr = "hyperref package for url links" },
+    fmta("\\href{<>}{<>}", { i(1, "url"), i(2, "display name") }),
+    { condition = tex.in_text }
   ),
 }

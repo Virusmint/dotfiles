@@ -26,8 +26,4 @@ local parse = require("luasnip.util.parser").parse_snippet
 local ms = ls.multi_snippet
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
-local M = {}
-
-M = {}
-
-return M
+return {}
