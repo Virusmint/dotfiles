@@ -1,17 +1,3 @@
-/*****----- Configuration -----*****/
-configuration {
-	modi:                       "drun,ssh,run,filebrowser,window";
-    show-icons:                 true;
-    display-drun:               "";
-    display-ssh:                "";
-    display-run:                "";
-    display-filebrowser:        "";
-    display-window:             "";
-	drun-display-format:        "{name}";
-	window-format:              "{w} · {c} · {t}";
-}
-
-/*****----- Global Properties -----*****/
 @import                          "colors.rasi"
 @import                          "fonts.rasi"
 
@@ -65,11 +51,11 @@ window {
     /* Backgroud Image */
     //background-image:          url("/path/to/image.png", none);
     /* Simple Linear Gradient */
-    // background-image:          linear-gradient(red, orange, pink, purple);
+    //background-image:          linear-gradient(red, orange, pink, purple);
     /* Directional Linear Gradient */
-    // background-image:          linear-gradient(to bottom, pink, yellow, magenta);
+    //background-image:          linear-gradient(to bottom, pink, yellow, magenta);
     /* Angle Linear Gradient */
-    // background-image:          linear-gradient(45, cyan, purple, indigo);
+    //background-image:          linear-gradient(45, cyan, purple, indigo);
 }
 
 /*****----- Main Box -----*****/
@@ -118,7 +104,7 @@ entry {
     background-color:            inherit;
     text-color:                  inherit;
     cursor:                      text;
-    placeholder:                 "Search...";
+    // placeholder:                 "Search...";
     placeholder-color:           inherit;
 }
 num-filtered-rows {
@@ -299,3 +285,4 @@ error-message {
     background-color:            @background-colour;
     text-color:                  @foreground-colour;
 }
+
