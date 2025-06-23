@@ -107,10 +107,16 @@ configuration {
   // Personal keybindings
   kb-row-down: "Down,Control+j";
   kb-row-up: "Up,Control+k";
+  kb-element-next: "";
+  kb-element-prev: "";
 	kb-remove-to-eol: "";
   kb-remove-to-sol: "Control+Shift+BackSpace";
   kb-accept-entry: "Return,KP_Enter";
+	kb-mode-next: "Control+l,Tab";
+	kb-mode-previous: "Control+h,ISO_Left_Tab";
 
+	kb-remove-char-back: "BackSpace";
+	kb-mode-complete: "";
   /* Default keybindings for Rofi
 	kb-primary-paste: "Control+V,Shift+Insert";
 	kb-secondary-paste: "Control+v,Insert";
