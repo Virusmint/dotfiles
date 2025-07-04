@@ -1,0 +1,5 @@
+ROOT_DIR: "$HOME/Documents/McGill"
+TARGET_DIR: "$HOME/Documents/McGill/bachelor-4"
+CURRENT_COURSE_SYMLINK: "$HOME/Documents/McGill/current-course"
+LECTURE_TITLE_MAX_WIDTH: 40
+NVIM_SOCKET_PATH: "$HOME/.cache/nvim/server.pipe"
