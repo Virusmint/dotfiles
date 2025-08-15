@@ -12,8 +12,7 @@ map("n", "<Down>", "<CMD>resize -2<CR>", { noremap = true, silent = true })
 -- Redo change
 map("n", "U", "<C-r>", { noremap = true, silent = true, desc = "Redo" })
 
--- TODO: fix this in a cleaner way? idk
--- Jump forward fix
+-- Jump forward remap
 map("n", "<C-I>", "<C-I>", { noremap = true })
 
 -- Fix spelling mistakes
@@ -25,14 +24,13 @@ map("s", "<C-j>", "<Plug>luasnip-next-choice", { noremap = false })
 map("i", "<C-k>", "<Plug>luasnip-prev-choice", { noremap = false })
 map("s", "<C-k>", "<Plug>luasnip-prev-choice", { noremap = false })
 
--- TODO: add which-key group for reloading files
 -- Reload Luasnip snippets
-map("n", "<leader>rs", function()
+map("n", "<leader>rl", function()
   require("luasnip.loaders.from_lua").load({ paths = { vim.fn.stdpath("config") .. "/lua/snippets/" } })
   vim.notify("󰑓 LuaSnip snippets reloaded!", vim.log.levels.INFO)
 end, { noremap = true, desc = "󰑓 Reload LuaSnip" })
 
--- Floating terminal
+-- TODO: Floating terminal
 -- map("n", "<leader>tt", function()
 --   require("lazyvim.util").float_term({ cmd = { "zsh" }, cwd = vim.fn.expand("%:p:h") })
 -- end, { noremap = true, desc = "󰈞 Open floating terminal" })

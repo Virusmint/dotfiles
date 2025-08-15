@@ -46,20 +46,3 @@ require("lazy").setup({
     },
   },
 })
-
--- Custom filetype association for Hyprland configuration files
-vim.filetype.add({
-  pattern = {
-    [".*/hypr/.*%.conf"] = "hyprlang", -- Matches any .conf file in the hypr directory
-  },
-})
-
--- LSP Diagnostics Configuration
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-  -- Enable underline, use default values
-  underline = true,
-  -- Enable virtual text, override spacing to 4
-  virtual_text = {
-    spacing = 4,
-  },
-})
