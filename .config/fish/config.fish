@@ -12,6 +12,7 @@ set -l os (uname)
 alias gg=lazygit
 #alias docker=podman
 alias dot='gg --git-dir="$HOME/.dotfiles/" --work-tree="$HOME"'
+alias dotf='/usr/bin/git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME"'
 alias gd=lazydocker
 alias gp="DOCKER_HOST=unix:///run/user/1000/podman/podman.sock lazydocker"
 alias n=nvim
