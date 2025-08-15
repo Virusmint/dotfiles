@@ -1,19 +1,25 @@
-notARepository: 'quit'
+notARepository: "quit"
 os:
   editPreset: nvim
 gui:
+  sidePanelWidth: 0.3
   showBottomLine: false
   theme:
     activeBorderColor:
-      - '#ef40ff'
-      - 'bold'
+      - "#ed7bcd"
+      - "bold"
     inactiveBorderColor:
-      - '#bfbfbf'
+      - "#D4BE98"
     selectedLineBgColor:
-      - 'black'
+      - "black"
     selectedRangeBgColor:
-      - 'black'
-      - 'bold'
+      - "black"
+      - "bold"
     unstagedChangesColor:
-      - 'yellow'
-  nerdFontsVersion: '3'
+      - "#eba721"
+  nerdFontsVersion: "3"
+
+git:
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}" # useConfig: false
