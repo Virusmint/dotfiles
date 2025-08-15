@@ -32,7 +32,6 @@ create_new_lecture() {
   fi
   echo "% ! TeX root = ./main.tex" >"$new_lecture_path"
   echo "\\lecture{$new_lecture_number}{$current_date}{$new_lecture_title}" >>"$new_lecture_path"
-  echo "$new_lecture_path"
 }
 
 nvim_lecture() {
@@ -79,12 +78,10 @@ main() {
     -l ${#rofi_options[@]}
   )
   selected_index=$(printf "%s\n" "${rofi_options[@]}" | rofi_dmenu "${ROFI_DMENU_ARGS[@]}") || exit 1
-  if [[ "$selected_index" -eq 0 ]]; then
-    selected_lecture_path=$(create_new_lecture) || exit 1
-  else
-    selected_lecture_path="${lecture_paths[$selected_index]}"
-  fi
-
+  case "$selected_index" in
+  0) selected_lecture_path=$(create_new_lecture) || exit 1 ;;
+  *) selected_lecture_path="${lecture_paths[$selected_index]}" ;;
+  esac
   nvim_lecture "$selected_lecture_path"
 
   popd >/dev/null || exit 1
