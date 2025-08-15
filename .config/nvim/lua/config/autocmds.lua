@@ -4,7 +4,7 @@
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "markdown", "tex", "rnoweb" },
-  command = "setlocal wrap",
+  command = "setlocal wrap spell",
 })
 
 -- open pdf files with zathura
