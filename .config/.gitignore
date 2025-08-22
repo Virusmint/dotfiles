@@ -1,7 +1,10 @@
 # Ignore everything by default
 /*
 
+
 # Except...
+!.gitignore
+
 !bat
 !btop
 !eza

@@ -1,10 +1,9 @@
-# Ignore everything by default.
+# Ignore everything by default
 /*
 
-# Git stuff
+# Except...
 !.gitignore
 
-# Files and directories to include
 !.config
 !.vimrc
 !wallpapers
