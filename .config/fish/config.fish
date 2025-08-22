@@ -1,16 +1,19 @@
-# Set up the prompt
 if not status is-interactive
     return 0
 end
 
-# Disable fish greeting message
-set -U fish_greeting
+set fish_greeting
 
-set -l os (uname)
+if test (uname -s) = Darwin
+    fish_add_path /opt/homebrew/bin
+else if test (uname -s) = Linux
+    # pass for now
+end
 
-# Aliases
+set -x EDITOR nvim
+set -x VISUAL nvim
+
 alias gg=lazygit
-#alias docker=podman
 alias dot='gg --git-dir="$HOME/.dotfiles/" --work-tree="$HOME"'
 alias dotf='/usr/bin/git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME"'
 alias gd=lazydocker
@@ -21,9 +24,5 @@ alias l="eza --long --all --group --header --icons"
 alias t="tree -C"
 alias cat="bat"
 alias icat="kitten icat"
-
-# Default editor
-set -x EDITOR nvim
-set -x VISUAL nvim
 
 starship init fish | source
