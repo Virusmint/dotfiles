@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/utils.sh"
@@ -16,7 +16,7 @@ create_new_lecture() {
     new_lecture_number=1
     cp "$CONFIG_ROOT_DIR/templates/main.tex" "$CURRENT_COURSE_TARGET/main.tex"
   else
-    last_lecture_number=$(basename "${lecture_paths[1]}" | grep -oP '\d+')
+    last_lecture_number=$(basename "${lecture_paths[1]}" | grep -oE '[0-9]+')
     new_lecture_number=$((last_lecture_number + 1))
   fi
   new_lecture_path="$CURRENT_COURSE_TARGET/lec_$(printf "%02d" "$new_lecture_number").tex"
@@ -32,6 +32,7 @@ create_new_lecture() {
   fi
   echo "% ! TeX root = ./main.tex" >"$new_lecture_path"
   echo "\\lecture{$new_lecture_number}{$current_date}{$new_lecture_title}" >>"$new_lecture_path"
+  echo "$new_lecture_path"
 }
 
 nvim_lecture() {
@@ -49,6 +50,7 @@ main() {
     printf "%s\n" "NA"
     find ~+ -type f -name 'lec_*.tex' | sort -r
   )
+  echo "$lecture_paths"
   num_lectures=$((${#lecture_paths[@]} - 1))
 
   rofi_options=("(+) <b>New Lecture</b>")
