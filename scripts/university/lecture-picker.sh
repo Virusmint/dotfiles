@@ -14,7 +14,7 @@ create_new_lecture() {
 
   if [[ $num_lectures -eq 0 ]]; then
     new_lecture_number=1
-    cp "$CONFIG_ROOT_DIR/templates/main.tex" "$CURRENT_COURSE_TARGET/main.tex"
+    cp "$CONFIG_ROOT_DIR/templates/master.tex" "$CURRENT_COURSE_TARGET/master.tex"
   else
     last_lecture_number=$(basename "${lecture_paths[1]}" | grep -oE '[0-9]+')
     new_lecture_number=$((last_lecture_number + 1))
@@ -30,7 +30,7 @@ create_new_lecture() {
   if [[ -z "$new_lecture_title" ]]; then
     new_lecture_title="Lecture $new_lecture_number"
   fi
-  echo "% ! TeX root = ./main.tex" >"$new_lecture_path"
+  echo "% ! TeX root = ./master.tex" >"$new_lecture_path"
   echo "\\lecture{$new_lecture_number}{$current_date}{$new_lecture_title}" >>"$new_lecture_path"
   echo "$new_lecture_path"
 }
