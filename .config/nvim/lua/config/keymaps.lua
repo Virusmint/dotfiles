@@ -16,7 +16,7 @@ map("n", "U", "<C-r>", { noremap = true, silent = true, desc = "Redo" })
 map("n", "<C-I>", "<C-I>", { noremap = true })
 
 -- Fix spelling mistakes
-map("i", "<C-f>", "<c-g>u<Esc>[s1z=`]a<c-g>u", { desc = "Correct last spelling error" })
+map("i", "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u", { desc = "Correct last spelling error" })
 
 -- Luasnip Choice Node
 map("i", "<C-j>", "<Plug>luasnip-next-choice", { noremap = false })
@@ -25,7 +25,7 @@ map("i", "<C-k>", "<Plug>luasnip-prev-choice", { noremap = false })
 map("s", "<C-k>", "<Plug>luasnip-prev-choice", { noremap = false })
 
 -- Reload Luasnip snippets
-map("n", "<leader>rl", function()
+map("n", "<leader>rs", function()
   require("luasnip.loaders.from_lua").load({ paths = { vim.fn.stdpath("config") .. "/lua/snippets/" } })
   vim.notify("󰑓 LuaSnip snippets reloaded!", vim.log.levels.INFO)
 end, { noremap = true, desc = "󰑓 Reload LuaSnip" })
