@@ -26,6 +26,9 @@ local parse = require("luasnip.util.parser").parse_snippet
 local ms = ls.multi_snippet
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
+-- Custom Helpers
+local tex = require("snippets.tex.utils").condition
+
 return {
   s(
     { trig = "BEG", snippetType = "autosnippet", dscr = "Generic Environment" },
@@ -80,7 +83,7 @@ return {
     { trig = "BEN", snippetType = "autosnippet", "Enumerate Environment" },
     fmta(
       [[
-      \begin{enumerate}[label=(\alph*)]
+      \begin{enumerate}[(i)]
         \item <>
       \end{enumerate}
       ]],
@@ -114,6 +117,106 @@ return {
       ]],
       { i(1), i(2), i(3) }
     ),
-    { condition = line_begin }
+    { condition = line_begin * tex.in_text }
+  ),
+  -- Theorems, Definitions, Propositions, etc.
+  s(
+    { trig = "THE", snippetType = "autosnippet", dscr = "Theorem Environment" },
+    fmta(
+      [[
+      \begin{theorem}{<>}{}
+        <>
+      \end{theorem}
+      ]],
+      { i(1), i(0) }
+    ),
+    { condition = line_begin * tex.in_text }
+  ),
+  s(
+    { trig = "DEF", snippetType = "autosnippet", dscr = "Definition Environment" },
+    fmta(
+      [[
+      \begin{definition}{<>}{}
+        <>
+      \end{definition}
+      ]],
+      { i(1), i(0) }
+    ),
+    { condition = line_begin * tex.in_text }
+  ),
+  s(
+    { trig = "LEM", snippetType = "autosnippet", dscr = "Lemma Environment" },
+    fmta(
+      [[
+      \begin{lemma}{<>}{}
+        <>
+      \end{lemma}
+      ]],
+      { i(1), i(0) }
+    ),
+    { condition = line_begin * tex.in_text }
+  ),
+  s(
+    { trig = "COR", snippetType = "autosnippet", dscr = "Corollary Environment" },
+    fmta(
+      [[
+      \begin{corollary}{<>}{}
+        <>
+      \end{corollary}
+      ]],
+      { i(1), i(0) }
+    ),
+    { condition = line_begin * tex.in_text }
+  ),
+  s(
+    { trig = "PROP", snippetType = "autosnippet", dscr = "Proposition Environment" },
+    fmta(
+      [[
+      \begin{proposition}{<>}{}
+        <>
+      \end{proposition}
+      ]],
+      { i(1), i(0) }
+    ),
+    { condition = line_begin * tex.in_text }
+  ),
+  s(
+    { trig = "PF", snippetType = "autosnippet", dscr = "Proof Environment" },
+    fmta(
+      [[
+      \begin{proof}
+        <>
+      \end{proof}
+      ]],
+      { i(0) }
+    ),
+    { condition = line_begin * tex.in_text }
+  ),
+  s(
+    { trig = "EG", snippetType = "autosnippet", dscr = "Example Environment" },
+    fmta(
+      [[
+      \begin{example}{<>}{}
+        <>
+      \end{example}
+      ]],
+      { i(1), i(0) }
+    ),
+    { condition = line_begin * tex.in_text }
+  ),
+  s(
+    { trig = "QS", snippetType = "autosnippet", dscr = "Question and Solution Environment" },
+    fmta(
+      [[
+    \begin{question}
+      <>
+      \begin{solution}
+        <>
+      \end{solution}
+    \end{question}
+    ]],
+      { i(1), i(0) }
+    ),
+    { condition = line_begin * tex.in_text }
   ),
 }

@@ -32,13 +32,7 @@ local scaff = require("snippets.tex.utils").scaffold
 
 return {
   -- TODO: bigO notation
-  s(
-    { trig = "OO", snippetType = "autosnippet", dscr = "big O" },
-    fmta("\\bigO(<>)", {
-      i(1),
-    }),
-    { condition = tex.in_mathzone }
-  ),
+  s({ trig = "OO", snippetType = "autosnippet", dscr = "big O" }, t("\\bigO"), { condition = tex.in_mathzone }),
   -- TODO: Algorithm Blocks
   -- s(
   --   { trig = "BALG", snippetType = "autosnippet", dscr = "big O" },

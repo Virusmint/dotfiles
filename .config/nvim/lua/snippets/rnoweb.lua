@@ -34,18 +34,15 @@ ls.filetype_extend("rnoweb", { "tex", "r" })
 
 return {
   s(
-    { trig = "RR", snippetType = "autosnippet", dscr = "R code block in Rnoweb" },
+    { trig = "rr", snippetType = "autosnippet", dscr = "R code block in Rnoweb" },
     fmt(
       [[
     <<{}>>=
     {}
     @
     ]],
-      { i(1, "init"), i(0) }
+      { i(1), i(0) }
     ),
-    {
-      condition = line_begin * tex.in_text,
-      show_condition = line_begin * tex.in_text,
-    }
+    { condition = line_begin * tex.in_text }
   ),
 }

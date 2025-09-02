@@ -52,8 +52,9 @@ return {
   -- Non-math Fonts
   s(
     -- I use \\text{} a bit more commonly than the others so a 2-letter trigger is more convenient.
-    { trig = "tq", snippetType = "autosnippet", dscr = "Text" },
-    fmta("\\text{<>}", {
+    { trig = "([^%w])tq", trigEngine = "pattern", wordTrig = false, snippetType = "autosnippet", dscr = "Text" },
+    fmta("<>\\text{<>}", {
+      l(l.CAPTURE1),
       d(1, get_visual),
     })
   ),

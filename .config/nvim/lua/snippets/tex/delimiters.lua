@@ -30,9 +30,23 @@ local line_begin = require("luasnip.extras.expand_conditions").line_begin
 local tex = require("snippets.tex.utils").condition
 local scaff = require("snippets.tex.utils").scaffolding
 
+-- Ejmastnak
+local function get_visual(_, parent)
+  if #parent.snippet.env.LS_SELECT_RAW > 0 then
+    return sn(nil, i(1, parent.snippet.env.LS_SELECT_RAW))
+  else -- If LS_SELECT_RAW is empty, return a blank insert node
+    return sn(nil, i(1))
+  end
+end
+
 return {
-  s(
-    { trig = "lr", snippetType = "autosnippet", dscr = "Left-Right Delimiters" },
+  -- s(
+  --   { trig = "prs", snippetType = "autosnippet", dscr = "Define Process" }, --  For Time Series
+  --   fmta("$\\{ <> \\}$", { d(1, get_visual) }),
+  --   { condition = tex.in_mathzone }
+  -- ),
+
+  s({ trig = "lr", snippetType = "autosnippet", dscr = "Left-Right Delimiters" }, {
     d(1, function(_, parent)
       local match = parent.snippet.env.LS_SELECT_RAW
       local snippet_node = i(1, match)
@@ -44,8 +58,17 @@ return {
         }),
       })
     end),
-    {
-      condition = tex.in_mathzone,
-    }
+  }, {
+    condition = tex.in_mathzone,
+  }),
+  s(
+    { trig = "{{", snippetType = "autosnippet", dscr = "Curly Braces" },
+    { fmta("\\{ <> \\}", { d(1, get_visual) }) },
+    { condition = tex.in_mathzone }
   ),
+
+  -- TODO: Complete this snippet
+  -- s({trig = "([%)%]).lr", snippetType = "autosnippet", dscr = "Left-Right Delimiters" }, {
+  --   d(1, function(snip, parent)
+  --     local bracket = snip.captures[1]
 }
