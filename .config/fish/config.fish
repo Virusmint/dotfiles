@@ -23,7 +23,8 @@ alias gp="DOCKER_HOST=unix:///run/user/1000/podman/podman.sock lazydocker"
 alias gitsane="git config pull.rebase true && git config rebase.autostash true"
 alias dot='gg --git-dir="$HOME/.dotfiles/" --work-tree="$HOME"'
 alias dotf='/usr/bin/git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME"'
-alias n=nvim
+alias n='NVIM_APPNAME=nvim nvim'
+alias ns='NVIM_APPNAME=nvim-scratch nvim'
 alias l="eza --long --all --group --header --icons"
 alias t="tree -C"
 alias cat="bat"
