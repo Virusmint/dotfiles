@@ -44,6 +44,10 @@ end
 -- TODO: function defs
 
 return {
+  -- Misc
+  s({ trig = "ov", snippetType = "autosnippet", desc = "Overline" }, fmta("\\overline{<>}", { d(1, get_visual) }), {
+    condition = tex.in_mathzone,
+  }),
   -- Inline math
   s(
     { trig = "mk", trigEngine = "pattern", wordTrig = false, snippetType = "autosnippet" },
@@ -59,11 +63,26 @@ return {
   s({ trig = "geq", snippetType = "autosnippet", dscr = "\\geq" }, { t("\\geq") }, { condition = tex.in_mathzone }),
   s({ trig = "neq", snippetType = "autosnippet", dscr = "\\neq" }, { t("\\neq") }, { condition = tex.in_mathzone }),
   s({ trig = "in ", snippetType = "autosnippet", dscr = "\\in" }, { t("\\in ") }, { condition = tex.in_mathzone }),
-
+  s(
+    { trig = "nin ", snippetType = "autosnippet", dscr = "\\notin" },
+    { t("\\notin ") },
+    { condition = tex.in_mathzone }
+  ),
+  s(
+    { trig = "upto", snippetType = "autosnippet", dscr = "\\uparrow" },
+    { t("\\uparrow") },
+    { condition = tex.in_mathzone }
+  ),
+  s(
+    { trig = "downto", snippetType = "autosnippet", dscr = "\\downarrow" },
+    { t("\\downarrow") },
+    { condition = tex.in_mathzone }
+  ),
   -- Symbols
   s({ trig = "inf", snippetType = "autosnippet" }, { t("\\infty") }, { condition = tex.in_mathzone }),
   s({ trig = "ninf", snippetType = "autosnippet" }, { t("-\\infty") }, { condition = tex.in_mathzone }),
   s({ trig = "ns", snippetType = "autosnippet" }, { t("\\emptyset") }, { condition = tex.in_mathzone }),
+  s({ trig = "s\\ ", snippetType = "autosnippet" }, { t("\\setminus ") }, { condition = tex.in_mathzone }),
 
   -- Aggregators
   s(
@@ -87,7 +106,20 @@ return {
     }),
     { condition = tex.in_mathzone }
   ),
+  s(
+    { trig = "DUN", snippetType = "autosnippet", dscr = "Big Disjoint Union" },
+    c(1, {
+      fmta("\\bigsqcup_{<>}^{<>} ", { i(1, "i=1"), i(2, "\\infty") }),
+      fmta("\\bigsqcup_{<>} ", { i(1) }),
+    }),
+    { condition = tex.in_mathzone }
+  ),
   s({ trig = "cup", snippetType = "autosnippet", dscr = "Union" }, { t("\\cup ") }, { condition = tex.in_mathzone }),
+  s(
+    { trig = "dup", snippetType = "autosnippet", dscr = "Disjoint Union" },
+    { t("\\sqcup ") },
+    { condition = tex.in_mathzone }
+  ),
   s(
     { trig = "IN", snippetType = "autosnippet", dscr = "Big Intersection" },
     c(1, {
@@ -208,11 +240,11 @@ return {
     fmta("\\{ <> \\}", i(1)),
     { condition = tex.in_mathzone }
   ),
-  -- s({ trig = "RR", snippetType = "autosnippet", dscr = "Real" }, { t("\\R") }, { condition = tex.in_mathzone }),
-  -- s({ trig = "NN", snippetType = "autosnippet", dscr = "Natural" }, { t("\\N") }, { condition = tex.in_mathzone }),
-  -- s({ trig = "ZZ", snippetType = "autosnippet", dscr = "Integers" }, { t("\\Z") }, { condition = tex.in_mathzone }),
-  -- s({ trig = "QQ", snippetType = "autosnippet", dscr = "Rational" }, { t("\\Q") }, { condition = tex.in_mathzone }),
-  -- s({ trig = "CC", snippetType = "autosnippet", dscr = "Complex" }, { t("\\C") }, { condition = tex.in_mathzone }),
+  s(
+    { trig = "sn", snippetType = "autosnippet", dscr = "Sequence" },
+    fmta("\\{ <>_n \\}_{<>}^{<>}", { i(1), i(2, "n=1"), i(3, "\\infty") }),
+    { condition = tex.in_mathzone }
+  ),
 
   -- Trigonometry
   s({ trig = "sin", snippetType = "autosnippet" }, fmta("\\sin(<>)", { i(1) }), { condition = tex.in_mathzone }),
@@ -293,6 +325,14 @@ return {
     c(1, {
       fmta("\\Var[<>]", { i(1) }),
       fmta("\\Var\\left[ <> \\right]", { i(1) }),
+    }),
+    { condition = tex.in_mathzone }
+  ),
+  s(
+    { trig = "\\Pr", snippetType = "autosnippet" },
+    c(1, {
+      fmta("\\mathbb{P}(<>)", { i(1) }),
+      fmta("\\mathbb{P}\\left( <> \\right)", { i(1) }),
     }),
     { condition = tex.in_mathzone }
   ),
