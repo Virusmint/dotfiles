@@ -39,13 +39,31 @@ local function get_visual(_, parent)
   end
 end
 
--- TODO: ldots cdots vdots
-
 -- TODO: function defs
 
 return {
   -- Misc
   s({ trig = "ov", snippetType = "autosnippet", desc = "Overline" }, fmta("\\overline{<>}", { d(1, get_visual) }), {
+    condition = tex.in_mathzone,
+  }),
+  s({ trig = "uv", snippetType = "autosnippet", desc = "Underline" }, fmta("\\underline{<>}", { d(1, get_visual) }), {
+    condition = tex.in_mathzone,
+  }),
+  s({ trig = "vv", snippetType = "autosnippet", desc = "Vector" }, fmta("\\vec{<>}", { d(1, get_visual) }), {
+    condition = tex.in_mathzone,
+  }),
+  s(
+    { trig = "ub", snippetType = "autosnippet", desc = "Underbrace" },
+    fmta("\\underbrace{<>}_{<>}", { d(1, get_visual), i(2) }),
+    {
+      condition = tex.in_mathzone,
+    }
+  ),
+  s({ trig = "..", snippetType = "autosnippet", desc = "Ellipsis" }, { t("\\ldots") }, { condition = tex.in_mathzone }),
+  s({ trig = "|.", snippetType = "autosnippet", desc = "Vertical Ellipsis" }, { t("\\vdots") }, {
+    condition = tex.in_mathzone,
+  }),
+  s({ trig = "\\.", snippetType = "autosnippet", desc = "Diagonal Ellipsis" }, { t("\\ddots") }, {
     condition = tex.in_mathzone,
   }),
   -- Inline math
@@ -184,6 +202,11 @@ return {
     snippetType = "autosnippet",
     dscr = "Superscript",
   }, fmta("<>^{<>}", { l(l.CAPTURE1), i(1) }), { condition = tex.in_mathzone }),
+  s(
+    { trig = "([%w%)%]%}])sa", trigEngine = "pattern", wordTrig = false, snippetType = "autosnippet", dscr = "Square" },
+    fmta("<>^{-1}", { l(l.CAPTURE1) }),
+    { condition = tex.in_mathzone }
+  ),
   s(
     { trig = "([%w%)%]%}])sd", trigEngine = "pattern", wordTrig = false, snippetType = "autosnippet", dscr = "Square" },
     fmta("<>^{2}", { l(l.CAPTURE1) }),

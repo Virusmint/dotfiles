@@ -26,4 +26,12 @@ M.in_tikz = function() -- TikZ picture environment detection
   return in_env("tikzpicture")
 end
 
+M.in_align = function() -- align environment detection
+  return in_env("align") or in_env("align*")
+end
+
+M.in_equation = function() -- equation environment detection
+  return in_env("equation") or in_env("equation*")
+end
+
 return M
