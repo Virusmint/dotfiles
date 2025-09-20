@@ -308,9 +308,9 @@ return {
   s(
     { trig = "lm", snippetType = "autosnippet", dscr = "Limit" },
     c(1, {
-      fmta("\\lim_{<> \\to <>} ", { i(1, "x"), i(2, "\\infty") }),
-      fmta("\\limsup_{<> \\to <>} ", { i(1, "x"), i(2, "\\infty") }),
-      fmta("\\liminf_{<> \\to <>} ", { i(1, "x"), i(2, "\\infty") }),
+      fmta("\\lim_{<> \\to <>} ", { i(1, "n"), i(2, "\\infty") }),
+      fmta("\\limsup_{<> \\to <>} ", { i(1, "n"), i(2, "\\infty") }),
+      fmta("\\liminf_{<> \\to <>} ", { i(1, "n"), i(2, "\\infty") }),
     }),
     { condition = tex.in_mathzone }
   ),
