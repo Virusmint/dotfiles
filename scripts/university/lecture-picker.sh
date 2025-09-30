@@ -17,7 +17,7 @@ create_new_lecture() {
     cp "$CONFIG_ROOT_DIR/templates/master.tex" "$CURRENT_COURSE_TARGET/master.tex"
   else
     last_lecture_number=$(basename "${lecture_paths[1]}" | grep -oE '[0-9]+')
-    new_lecture_number=$((last_lecture_number + 1))
+    new_lecture_number=$((10#$last_lecture_number + 1))
   fi
   new_lecture_path="$CURRENT_COURSE_TARGET/lec_$(printf "%02d" "$new_lecture_number").tex"
   new_lecture_title=$(
@@ -50,7 +50,6 @@ main() {
     printf "%s\n" "NA"
     find ~+ -type f -name 'lec_*.tex' | sort -r
   )
-  echo "$lecture_paths"
   num_lectures=$((${#lecture_paths[@]} - 1))
 
   rofi_options=("(+) <b>New Lecture</b>")
