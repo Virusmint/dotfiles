@@ -161,7 +161,7 @@ return {
       snippetType = "autosnippet",
       dscr = "Subscript",
     },
-    fmta("<>_{<>} ", {
+    fmta("<>_{<>}", {
       l(l.CAPTURE1),
       i(1),
     }),
@@ -175,7 +175,7 @@ return {
       snippetType = "autosnippet",
       dscr = "Subscript Basic Index",
     },
-    fmta("<>_{<>} ", {
+    fmta("<>_{<>}", {
       l(l.CAPTURE1),
       l(l.CAPTURE2),
     }),
@@ -189,7 +189,7 @@ return {
       snippetType = "autosnippet",
       dscr = "Subscript Basic Index",
     },
-    fmta("<>_{<>} ", {
+    fmta("<>_{<>}", {
       l(l.CAPTURE1),
       l(l.CAPTURE2),
     }),
@@ -260,7 +260,7 @@ return {
   s({ trig = "sup", snippetType = "autosnippet", dscr = "supremum" }, { t("\\sup") }, { condition = tex.in_mathzone }),
   s(
     { trig = "ss", snippetType = "autosnippet", dscr = "Set Builder" },
-    fmta("\\{ <> \\}", i(1)),
+    fmta("\\{ <> \\}", d(1, get_visual)),
     { condition = tex.in_mathzone }
   ),
   s(
@@ -327,8 +327,9 @@ return {
   s(
     { trig = "int", snippetType = "autosnippet", dscr = "Integral" },
     c(1, {
-      fmta("\\int_{<>}^{<>} <> \\diff <> ", { i(1, "-\\infty"), i(2, "\\infty"), i(3), i(4, "x") }),
+      fmta("\\int <> \\diff <> ", { i(1), i(2, "x") }),
       fmta("\\int_{<>} <> \\diff <> ", { i(1), i(2), i(3) }),
+      fmta("\\int_{<>}^{<>} <> \\diff <> ", { i(1, "-\\infty"), i(2, "\\infty"), i(3), i(4, "x") }),
     }),
     { condition = tex.in_mathzone }
   ),
