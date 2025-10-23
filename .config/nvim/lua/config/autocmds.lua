@@ -42,3 +42,11 @@ autocmd("BufRead", {
   end,
   desc = "Load custom LuaSnip snippets based on the course in the file path",
 })
+
+-- C shiftwidth to 4
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "c",
+  callback = function()
+    vim.opt_local.shiftwidth = 4
+  end,
+})
