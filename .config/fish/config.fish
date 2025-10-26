@@ -11,7 +11,7 @@ if test (uname -s) = Darwin
         eval /Users/david/miniconda3/bin/conda "shell.fish" hook $argv | source
     end
 else if test (uname -s) = Linux
-    # pass for now
+    alias z='zathura --fork'
 end
 
 set -x EDITOR nvim
