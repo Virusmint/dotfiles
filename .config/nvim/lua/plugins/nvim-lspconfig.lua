@@ -2,14 +2,20 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
-      local keys = require("lazyvim.plugins.lsp.keymaps").get()
-      keys[#keys + 1] = { "<C-k>", mode = { "i" }, false }
-
+      -- local keys = require("lazyvim.plugins.lsp.keymaps").get()
+      -- keys[#keys + 1] = { "<C-k>", mode = { "i" }, false }
+      --
       -- Disable tex inlay hints (particularly for texlab lsp)
       vim.list_extend(opts.inlay_hints.exclude, {
         "tex",
       })
-
+      opts.servers = {
+        ["*"] = {
+          keys = {
+            { "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", has = "definition" },
+          },
+        },
+      }
       opts.setup = {
         -- https://github.com/latex-lsp/texlab/wiki/Configuration
         texlab = function(_, opts)
