@@ -181,20 +181,20 @@ return {
     }),
     { condition = tex.in_mathzone }
   ),
-  s(
-    {
-      trig = "([%a%}])([ijk]) ",
-      trigEngine = "pattern",
-      wordTrig = false,
-      snippetType = "autosnippet",
-      dscr = "Subscript Basic Index",
-    },
-    fmta("<>_{<>}", {
-      l(l.CAPTURE1),
-      l(l.CAPTURE2),
-    }),
-    { condition = tex.in_mathzone }
-  ),
+  -- s(
+  --   {
+  --     trig = "([%a%}])([ijk]) ",
+  --     trigEngine = "pattern",
+  --     wordTrig = false,
+  --     snippetType = "autosnippet",
+  --     dscr = "Subscript Basic Index",
+  --   },
+  --   fmta("<>_{<>}", {
+  --     l(l.CAPTURE1),
+  --     l(l.CAPTURE2),
+  --   }),
+  --   { condition = tex.in_mathzone }
+  -- ),
   s({
     trig = "([%w%)%]%}]):",
     trigEngine = "pattern",
@@ -305,6 +305,7 @@ return {
   ),
 
   -- Calculus
+  s({ trig = "to ", snippetType = "autosnippet", dscr = "to" }, { t("\\to ") }, { condition = tex.in_mathzone }),
   s(
     { trig = "lm", snippetType = "autosnippet", dscr = "Limit" },
     c(1, {
