@@ -17,11 +17,6 @@ set completion-group-fg         rgba(98,114,164,1)    # Comment
 set completion-highlight-bg     rgba(68,71,90,1)      # Selection
 set completion-highlight-fg     rgba(212,190,152,1)   # Foreground
 
-set index-bg                    rgba(40,42,54,1)      # Background
-set index-fg                    rgba(212,190,152,1)   # Foreground
-set index-active-bg             rgba(68,71,90,1)      # Current Line
-set index-active-fg             rgba(212,190,152,1)   # Foreground
-
 set inputbar-bg                 rgba(40,42,54,1)      # Background
 set inputbar-fg                 rgba(212,190,152,1)   # Foreground
 set statusbar-bg                rgba(40,42,54,1)      # Background
