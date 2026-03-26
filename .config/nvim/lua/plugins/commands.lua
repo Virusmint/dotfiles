@@ -14,6 +14,7 @@ vim.api.nvim_create_user_command("ToggleCopilotSuggestion", function()
   end
 end, {})
 
+-- Rnoweb compile
 vim.api.nvim_create_user_command("RnwVimtexCompile", function()
   vim.cmd("w")
   local basename = vim.fn.expand("%:r")
