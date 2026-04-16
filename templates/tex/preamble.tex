@@ -1,0 +1,198 @@
+\usepackage{amsmath,amsfonts,amssymb} % Math packages
+\usepackage{mathtools} % For defining floor and ceiling functions
+\usepackage{amsthm}    % Theorems
+\usepackage{bm}        % Bold math
+\usepackage{bbm}       % More bold math?
+\usepackage{array}     % Better tables
+\usepackage{physics}   % derivatives and partials
+\usepackage{float}     % Better positioning [H]
+\usepackage{framed}    % Framed boxes
+\usepackage{geometry}  % Required for adjusting page dimensions and margins
+\usepackage{graphicx}  % Include images
+\usepackage{multirow}  % multicolumn tables
+\usepackage{pgfplots}  % Create plots in latex
+\usepackage[shortlabels]{enumitem} %lets us change the enumeration to (a), (b), ...
+\usepackage{booktabs}  % Better looking horizontal rules
+\usepackage{makecell}  % Pre-formatting of column heads
+\usepackage{hyperref}  % Clickable links
+\usepackage{tikz}      % Graphs
+\usepackage{cancel}    % Cancel out terms
+\usepackage{xstring}   % String manipulation
+
+\usetikzlibrary{shapes,arrows,positioning} % Graph arrows
+\usetikzlibrary{automata,positioning,fit,shapes.geometric,backgrounds} % Node grouping
+\usetikzlibrary{calc, tikzmark}  % Marking equations
+\renewcommand{\arraystretch}{1.6}
+
+\newcommand{\defeq}{\vcentcolon=}
+\newcommand{\eqdef}{=\vcentcolon}
+
+% TODO: FOOTNOTES
+
+% Add '\def\usetcboxtheorems{}' to your main.tex file BEFORE importing this preamble
+\ifdefined\usetcboxtheorems
+    \usepackage{tcolorbox}
+    \tcbuselibrary{many}
+    \definecolor{theorembg}{HTML}{F8FFF8}
+    \definecolor{theoremfr}{HTML}{006400}
+    \definecolor{propositionbg}{HTML}{F8F8FF}
+    \definecolor{propositionfr}{HTML}{000080}
+    \definecolor{definitionbg}{HTML}{FDF8F8}
+    \definecolor{definitionfr}{HTML}{8B0000}
+    \definecolor{lemmabg}{HTML}{FAFDFB}
+    \definecolor{lemmafr}{HTML}{006400}
+    \definecolor{corollaryfr}{HTML}{8A2BE2}
+    \definecolor{corollarybg}{HTML}{FBF8FD}
+    \newcommand{\DefineTheoremBoxStyle}[5]{
+      \newtcbtheorem[number within=chapter]{#1}{#2}{
+        enhanced,
+        breakable,
+        colback = #4,
+        frame hidden,
+        boxrule = 0sp,
+        borderline west = {2pt}{0pt}{#5},
+        sharp corners,
+        detach title,
+        before upper = \tcbtitle\par\smallskip,
+        coltitle = #5,
+        fonttitle = \bfseries\sffamily,
+        description font = \mdseries,
+        separator sign none,
+        segmentation style={solid, #5},
+      }
+      {#3}
+    }
+    \DefineTheoremBoxStyle{theorem}{Theorem}{thm}{theorembg}{theoremfr}
+    \DefineTheoremBoxStyle{definition}{Definition}{def}{definitionbg}{definitionfr}
+    \DefineTheoremBoxStyle{lemma}{Lemma}{lem}{lemmabg}{lemmafr}
+    \DefineTheoremBoxStyle{corollary}{Corollary}{cor}{corollarybg}{corollaryfr}
+    \DefineTheoremBoxStyle{proposition}{Proposition}{prop}{propositionbg}{propositionfr}
+    % TODO: Color green
+    \definecolor{greentitle}{RGB}{61,170,61}
+    \definecolor{greentitleback}{RGB}{216,233,213}
+    \newtcbtheorem[number within=chapter]{example}{Example}{
+      breakable,
+        enhanced,
+        colback=white,
+        colbacktitle=white,
+        arc=0pt,
+        leftrule=1pt,
+        rightrule=0pt,
+        toprule=0pt,
+        bottomrule=0pt,
+        titlerule=0pt,
+        colframe=greentitleback,
+        fonttitle=\normalcolor,
+        overlay={
+          \node[
+            outer sep=0pt,
+            anchor=east,
+            text width=2.5cm,
+            minimum height=4ex,
+            fill=greentitleback,
+            font=\color{greentitle}\sffamily\scshape
+          ] at (title.west) {example~\thetcbcounter};
+        },
+    }{ex}
+\else
+    \newtheorem{theorem}{Theorem}[chapter]
+    \newtheorem{definition}{Definition}[chapter]
+    \newtheorem{lemma}{Lemma}[chapter]
+    \newtheorem{corollary}{Corollary}[chapter]
+    \newtheorem{proposition}{Proposition}[chapter]
+    \newtheorem{example}{Example}[chapter]
+\fi
+
+% stats stuff
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathbb{V}\mathrm{ar}}
+\newcommand{\Cov}{\mathbb{C}\mathrm{ov}}
+\newcommand{\Risk}{\mathcal{R}}
+\newcommand{\Bias}{\mathrm{Bias}}
+\newcommand{\Normal}{\mathcal{N}}
+\newcommand{\Exponential}{\mathrm{Exp}}
+\newcommand{\Poisson}{\mathrm{Poisson}}
+\newcommand{\Bernoulli}{\mathrm{Bernoulli}}
+\newcommand{\Binomial}{\mathrm{Binomial}}
+\newcommand{\Uniform}{\mathrm{Uniform}}
+\newcommand{\Beta}{\mathrm{Beta}}
+\newcommand{\GammaDist}{\mathrm{Gamma}}
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+% math stuff
+\newcommand{\myrightarrow}[1]{\xrightarrow{\makebox[1.5em][c]{$\scriptstyle#1$}}}
+\newcommand{\diff}{\ensuremath{\operatorname{d}\!}} % Differential operator
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Ind}{\mathbbm{1}}
+\newcommand{\I}{\mathbbm{1}}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclarePairedDelimiter\angleb{\langle}{\rangle}
+
+% Cs stuff
+\newcommand{\bigO}{\mathcal{O}} % Big O notation
+\usepackage{algorithm2e}        % Algorithms
+\RestyleAlgo{ruled}             % Change the style of the algorithm
+\usepackage{listings}  % Code environments
+\lstset{
+	basicstyle=\ttfamily,
+	inputencoding=utf8,
+	escapeinside={\%*}{*)},
+	numbers=left,
+	breaklines=true
+}
+
+
+% Document Formatting
+\geometry{
+	top=4cm, % Top margin
+	bottom=2.5cm, % Bottom margin
+	left=4cm, % Left margin
+	right=4cm, % Right margin
+	headheight=14pt, % Header height
+	footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+	headsep=1.2cm, % Space from the top margin to the baseline of the header
+}
+\setlength{\parskip}{14pt}
+\usepackage{titlesec}
+\titleformat{\chapter}[hang]{\normalfont\huge\bfseries}{\thechapter}{20pt}{\Huge}
+\titleformat{\section}[hang]{\normalfont\Large\bfseries}{\thesection}{20pt}{\Large}
+\titleformat{\subsection}[hang]{\normalfont\large\bfseries}{\thesubsection}{20pt}{\large}
+\titleformat{\subsubsection}[hang]{\normalfont\normalsize\bfseries}{\thesubsubsection}{20pt}{\normalsize}
+\titleformat{\paragraph}[hang]{\normalfont\normalsize\bfseries}{\theparagraph}{20pt}{\normalsize}
+\titleformat{\subparagraph}[hang]{\normalfont\normalsize\bfseries}{\thesubparagraph}{20pt}{\normalsize}
+\usepackage{nopageno}  % No page numbers other than fancyhdr
+\usepackage{fancyhdr}  % Fancy headers and footers
+\pagestyle{fancy}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[RO,LE]{\thepage} % Right odd,  Left even
+\fancyhead[RE]{\small\leftmark} % Left odd, Right even
+
+% Macros for lecture notes
+\usepackage{xifthen}
+\newif\iffinalversion
+% add '\finalversiontrue' to your main.tex file AFTER importing this preamble to hide lecture headers
+\def\@lecture{}%
+% Defines lecture command with position arguments: lecture #, date, title
+\newcommand{\lecture}[3]{
+  \iffinalversion
+    % Do nothing
+  \else
+    \ifthenelse{\isempty{#3}}{%
+        \def\@lecture{Lect. #1}%
+    }{
+        \def\@lecture{Lect. #1: #3}%
+    }
+    \subsection*{\@lecture}
+    \marginpar{\small\textsf{\mbox{#2}}}
+  \fi
+}
