@@ -6,13 +6,14 @@
   // "spacing": 4, // Gaps between modules (4px)
   // Choose the order of the modules
   "modules-left": ["custom/arch", "custom/weather", "clock#calendar", "clock"],
-  "modules-center": ["hyprland/workspaces", "hyprland/scratchpad"],
+  "modules-center": ["hyprland/workspaces"],
   "modules-right": [
     "custom/media",
     "wireplumber",
     "wireplumber#source",
     "temperature",
     "network",
+    "bluetooth",
     "tray",
   ],
   // modules configuration
@@ -44,45 +45,41 @@
       },
     },
   },
-
   "hyprland/workspaces": {
     "warp-on-scroll": false,
     "format": "{name}",
   },
-  "hyprland/scratchpad": {
-    "format": "{icon} {count}",
-    "show-empty": false,
-    "format-icons": ["", ""],
-    "tooltip": true,
-    "tooltip-format": "{app}: {title}",
-  },
   "tray": {
-    // "icon-size": 21,
+    "icon-size": 16,
     "spacing": 10,
-    // "icons": {
-    //   "blueman": "bluetooth",
-    //   "TelegramDesktop": "$HOME/.local/share/icons/hicolor/16x16/apps/telegram.png"
-    // }
   },
   "temperature": {
-    "thermal-zone": 1,
+    "thermal-zone": 0,
     "critical-threshold": 80,
-    // "format-critical": "{temperatureC}°C {icon}",
     "format": "{icon}",
     "format-icons": ["", "", ""],
     "tooltip": true,
     "tooltip-format": "{temperatureC}°C",
   },
   "network": {
-    // "interface": "wlp2*", // (Optional) To force the use of this interface
     "format-wifi": " ",
     "format-ethernet": " ",
-    "format-disconnected": " ", //An empty format will hide the module.
+    "format-disconnected": " ",
     "tooltip-format": " {ifname} via {gwaddr}",
     "tooltip-format-wifi": " {essid} ({signalStrength}%)",
     "tooltip-format-ethernet": " {ifname} {ipaddr}/{cidr}",
     "tooltip-format-disconnected": "Disconnected",
     "max-length": 50,
+  },
+  "bluetooth": {
+    "format": "",
+    "on-click": "$HOME/.config/waybar/scripts/rofi-bluetooth.sh",
+    "format-connected": " {device_alias}",
+    "format-connected-battery": " {device_alias} {device_battery_percentage}%",
+    "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
   },
   "wireplumber": {
     "format": "{icon} {volume:2d}%",
