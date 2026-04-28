@@ -5,7 +5,6 @@
 !.gitignore
 
 !.config
-!.vimrc
 !wallpapers
 !scripts
 !templates
