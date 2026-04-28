@@ -1,0 +1,163 @@
+/* Colors (dracula) */
+@define-color foreground	#f8f8f2;
+@define-color background	RGBA(26, 27, 30, 0.80);
+@define-color orange	#ed7e32;
+@define-color gray	#44475a;
+@define-color black #21222c;
+@define-color red	#ff5b47;
+@define-color green	#ed7e32;
+@define-color yellow	#f1fa8c;
+@define-color cyan	#8be9fd;
+@define-color blue	#8ac6db;
+@define-color purple	#ed7bcd;
+@define-color pink	#ff79c6;
+@define-color white #ffffff;
+@define-color brred #ff6e6e;
+@define-color brgreen #69ff94;
+@define-color bryellow #ffffa5;
+@define-color brcyan #a4ffff;
+@define-color brblue #6272a4;
+@define-color brpurple #d6acff;
+@define-color brpink #ff92df;
+
+@define-color arch_blue #89b4fa;
+
+@define-color workspace_background	@background;
+@define-color workspace_button	@foreground;
+@define-color workspace_active	@black;
+@define-color workspace_active_background	@green;
+@define-color workspace_urgent	@white;
+@define-color workspace_urgent_background	@brred;
+@define-color workspace_hover	@black;
+@define-color workspace_hover_background	@pink;
+@define-color critical	@red;
+@define-color warning	@yellow;
+
+@keyframes blink {
+  to {
+    background-color: @white;
+    color: @black;
+  }
+}
+
+* {
+  border: none;
+  border-radius: 0;
+  font-family: "monospace";
+  font-weight: bold;
+  font-size: 16px;
+  min-height: 0;
+}
+
+window#waybar {
+  background: @background;
+  color: @foreground;
+}
+
+#workspaces {
+  opacity: 1;
+  transition: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+}
+
+#workspaces button,
+#workspaces button.empty {
+  background: transparent;
+  color: @blue;
+  border-radius: 5px;
+  padding: 0 6px;
+  min-width: 18px;
+  transition: none;
+}
+
+#workspaces button.active {
+  background: transparent;
+  color: @orange;
+  border-bottom: 2px solid @orange;
+  border-radius: 5px 5px 0 0;
+}
+
+#workspaces button.focused {
+  background: @workspace_active_background;
+  color: @workspace_active;
+  border-radius: 5px;
+  border-bottom: 2px solid @pink;
+}
+
+#workspaces button.urgent {
+  background: @workspace_urgent_background;
+  color: @workspace_urgent;
+  border-radius: 5px;
+  animation-name: blink;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#workspaces button:hover {
+  background: @workspace_hover_background;
+  color: @workspace_hover;
+  border-radius: 5px;
+}
+
+#workspaces button:not(.current_output) {
+  opacity: 1;
+}
+
+#taskbar {
+  border-radius: 5px;
+  margin: 0px 10px 0px 50px;
+}
+
+tooltip {
+  opacity: 0.95;
+  border-width: 1px;
+  border-style: solid;
+  border-color: @white;
+}
+
+tooltip label {
+  color: @foreground;
+}
+
+#custom-arch,
+#custom-weather,
+#custom-date,
+#clock,
+#custom-media,
+#wireplumber,
+#wireplumber.source,
+#network,
+#tray,
+#temperature,
+#backlight,
+#language {
+  opacity: 1;
+  padding: 0px 5px;
+  margin: 0px 0px 2px 0px;
+}
+
+#custom-arch {
+  color: @arch_blue;
+  border-radius: 5px 0px 0px 5px;
+}
+
+#custom-media {
+  padding: 0px 20px 0px 5px;
+  border-radius: 0px 5px 5px 0px;
+}
+
+#tray {
+  border-radius: 5px;
+  margin: 5px 5px 0px 0px;
+}
+
+#temperature.critical {
+  background-color: @critical;
+}
+
+#temperature.warning {
+  background-color: @warning;
+}

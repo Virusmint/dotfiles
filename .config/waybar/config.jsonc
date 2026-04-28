@@ -1,0 +1,126 @@
+// -*- mode: jsonc -*-
+// https://github.com/mhdzli/dotfiles/tree/home/.config/waybar
+{
+  "layer": "top", // Waybar at top layer
+  "height": 36, // Waybar height (to be removed for auto height)
+  // "spacing": 4, // Gaps between modules (4px)
+  // Choose the order of the modules
+  "modules-left": ["custom/arch", "custom/weather", "clock#calendar", "clock"],
+  "modules-center": ["hyprland/workspaces", "hyprland/scratchpad"],
+  "modules-right": [
+    "custom/media",
+    "wireplumber",
+    "wireplumber#source",
+    "temperature",
+    "network",
+    "tray",
+  ],
+  // modules configuration
+  "custom/arch": {
+    "format": "  ",
+    "on-click": "$HOME/.config/rofi/scripts/launcher",
+    "tooltip": false,
+  },
+  "custom/weather": {
+    // Shows current weather and forecast via wttr.in
+    "tooltip": true,
+    "format": "{}",
+    "interval": 3600,
+    "exec": "~/.config/waybar/scripts/weather.py",
+    "return-type": "json",
+  },
+  "clock": {
+    "format": " {:%H:%M}",
+    "tooltip": false,
+  },
+  "clock#calendar": {
+    "interval": 60,
+    "format": " {:%Y-%m-%d}",
+    "tooltip": true,
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "format": {
+        "today": "<span color='#ff6699'><b><u>{}</u></b></span>",
+      },
+    },
+  },
+
+  "hyprland/workspaces": {
+    "warp-on-scroll": false,
+    "format": "{name}",
+  },
+  "hyprland/scratchpad": {
+    "format": "{icon} {count}",
+    "show-empty": false,
+    "format-icons": ["", ""],
+    "tooltip": true,
+    "tooltip-format": "{app}: {title}",
+  },
+  "tray": {
+    // "icon-size": 21,
+    "spacing": 10,
+    // "icons": {
+    //   "blueman": "bluetooth",
+    //   "TelegramDesktop": "$HOME/.local/share/icons/hicolor/16x16/apps/telegram.png"
+    // }
+  },
+  "temperature": {
+    "thermal-zone": 1,
+    "critical-threshold": 80,
+    // "format-critical": "{temperatureC}°C {icon}",
+    "format": "{icon}",
+    "format-icons": ["", "", ""],
+    "tooltip": true,
+    "tooltip-format": "{temperatureC}°C",
+  },
+  "network": {
+    // "interface": "wlp2*", // (Optional) To force the use of this interface
+    "format-wifi": " ",
+    "format-ethernet": " ",
+    "format-disconnected": " ", //An empty format will hide the module.
+    "tooltip-format": " {ifname} via {gwaddr}",
+    "tooltip-format-wifi": " {essid} ({signalStrength}%)",
+    "tooltip-format-ethernet": " {ifname} {ipaddr}/{cidr}",
+    "tooltip-format-disconnected": "Disconnected",
+    "max-length": 50,
+  },
+  "wireplumber": {
+    "format": "{icon} {volume:2d}%",
+    "format-muted": "   0%",
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-click-right": "pavucontrol",
+    "on-scroll-up": "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+",
+    "on-scroll-down": "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%-",
+    "scroll-step": 5,
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", "", ""],
+    },
+  },
+  "wireplumber#source": {
+    "format": "{format_source}",
+    "format-source": "",
+    "format-source-muted": "",
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
+  },
+  "custom/media": {
+    "format": "{icon}",
+    "return-type": "json",
+    "format-icons": {
+      "spotify": "",
+      "default": "🎜",
+    },
+    "escape": true,
+    "on-click": "playerctl play-pause",
+    "on-click-forward": "playerctl next",
+    "on-click-backward": "playerctl previous",
+    "exec": "/usr/bin/python $HOME/.config/waybar/scripts/mediaplayer.py --player spotify 2> /dev/null", // Filter player based on name
+    "tooltip": true,
+    "tooltip-format": "{text}",
+  },
+}
