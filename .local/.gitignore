@@ -4,8 +4,4 @@
 # Except...
 !.gitignore
 
-!.config/
-!wallpapers/
-!templates/
-!README.md
-!.local/
+!bin
