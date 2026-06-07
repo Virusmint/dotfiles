@@ -1,0 +1,45 @@
+#!/bin/bash
+
+MOUNT_POINT="$HOME/webdav" # Make sure /etc/fstab is properly configured
+CACHE_FILE="$HOME/.cache/paper_list.txt"
+TEMP_CACHE="${CACHE_FILE}.tmp"
+
+# Ensure the cache directory exists
+mkdir -p "$(dirname "$CACHE_FILE")"
+
+# Make sure the share is mounted
+if ! mountpoint -q "$MOUNT_POINT"; then
+  mount "$MOUNT_POINT" 2>/dev/null
+fi
+
+update_cache() {
+  # Write basename of papers in the share into the cache file - ignore files .Trash/ or lost+found/
+  find "$MOUNT_POINT" \
+    - maxdept 1 \
+    -type f -name "*.pdf" -printf "%P\n" |
+    sed "s/\.pdf$//" >"$TEMP_CACHE"
+
+  mv "$TEMP_CACHE" "$CACHE_FILE"
+}
+
+if [ ! -f "$CACHE_FILE" ]; then
+  echo "Building initial cache..."
+  update_cache
+else
+  # Send to background job
+  update_cache &
+fi
+
+# Present papers via rofi dmenu
+SELECTED_BASENAME=$(rofi-dmenu -matching fuzzy -i -theme-str 'entry {placeholder: "Search Paper...";}' <"$CACHE_FILE")
+
+if [ -z "$SELECTED_BASENAME" ]; then
+  exit 0
+fi
+
+FILENAME="${MOUNT_POINT}/${SELECTED_BASENAME}.pdf"
+
+# Open pdf
+if [ -f "$FILENAME" ]; then
+  xdg-open "$FILENAME" &>/dev/null &
+fi
