@@ -68,10 +68,6 @@ hl.config({
 	scrolling = {
 		fullscreen_on_one_column = true,
 	},
-
-	input = {
-		kb_options = "caps:escape", -- Set Caps Lock to Escape
-	},
 })
 
 -- Default curves and animations, see https://wiki.hypr.land/configuring/core/animations/
