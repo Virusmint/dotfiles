@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+ROFI_STYLE_PATH="$HOME/.config/rofi/dmenu/style.rasi"
+
+while [[ "$#" -gt 0 ]]; do
+  case $1 in
+  -h | --help)
+    echo "Usage: $0 [options]"
+    echo "Options:"
+    echo "  -h, --help    Show this help message"
+    echo "  -prompt       Set the prompt text for the picker"
+    echo "  -args         Pass additional arguments as a single string to the picker command"
+    exit 0
+    ;;
+  -prompt)
+    PROMPT="$2"
+    shift 2
+    ;;
+  -args)
+    ARGS="$2"
+    shift 2
+    ;;
+  -*)
+    echo "Unknown option: $1"
+    exit 1
+    ;;
+  esac
+done
+
+function get_picker_cmd() {
+  OS_NAME=$(uname -s)
+  if [[ "$OS_NAME" == "Linux" ]]; then
+    picker_cmd="rofi -dmenu -matching fuzzy -i -theme $ROFI_STYLE_PATH -theme-str \"entry {placeholder: \\\"$PROMPT\\\";}\" $ARGS"
+  elif [[ "$OS_NAME" == "Darwin" ]]; then
+    picker_cmd="choose"
+  else
+    echo "Unsupported OS: $OS_NAME"
+    exit 1
+  fi
+  echo "$picker_cmd"
+}
+
+picker_cmd=$(get_picker_cmd)
+eval "$picker_cmd" "$@"
